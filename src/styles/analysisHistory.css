@@ -299,13 +299,37 @@
 
 @media (max-width: 640px) {
   .analysis-filters {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+  }
 
-    gap: 12px;
+  .analysis-filter-input,
+  .analysis-filter-trigger {
+    width: 100%;
+    min-width: 0;
+    height: 52px;
+    box-sizing: border-box;
+  }
 
-    padding: 16px;
+  /* Specifically for the date input */
+  .analysis-filter-input[type="date"] {
+    width: 100%;
+    min-width: 0;
+    display: block;
+
+    padding-left: 14px;
+    padding-right: 12px;
+
+    font-size: 14px;
+  }
+
+  .analysis-select-content {
+    max-width: calc(100vw - 32px);
   }
 }
+
 /* =========================================================
    TABLE CARD
 ========================================================= */
@@ -662,47 +686,244 @@
    RESPONSIVE - MOBILE
 ========================================================= */
 
+/* =========================================================
+   MOBILE - ANALYSIS HISTORY
+   ========================================================= */
+
 @media (max-width: 640px) {
-  .analysis-history-container {
-    gap: 16px;
+
+  /* Analysis table container */
+  .analysis-table-card {
+    width: 100%;
+    overflow: hidden;
   }
 
-  .analysis-history-title {
-    font-size: 25px;
+  .analysis-table-wrapper {
+    width: 100%;
+    overflow-x: visible;
   }
 
-  .analysis-history-description {
-    font-size: 14px;
+  /* Convert table to block layout */
+  .analysis-table {
+    width: 100%;
+    display: block;
   }
 
-  .analysis-search-card,
-  .analysis-filters-card {
+  .analysis-table thead {
+    display: none;
+  }
+
+  .analysis-table tbody {
+    display: block;
+    width: 100%;
+  }
+
+  /* ---------------------------------------------------------
+     EACH ANALYSIS = CARD
+     --------------------------------------------------------- */
+
+  .analysis-table tbody tr {
+    display: block;
+    width: 100%;
+
+    margin-bottom: 16px;
     padding: 16px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
   }
 
-  .analysis-filters-grid {
-    grid-template-columns: 1fr;
+  /* ---------------------------------------------------------
+     EACH CELL
+     --------------------------------------------------------- */
+
+  .analysis-table tbody td {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    min-width: 0;
+
+    padding: 10px 0;
+
+    border: none;
+
+    box-sizing: border-box;
 
     gap: 10px;
   }
 
-  .analysis-table-card {
-    border-radius: 12px;
+  /* ---------------------------------------------------------
+     MOBILE LABELS
+     --------------------------------------------------------- */
+
+  .analysis-table tbody td::before {
+    flex: 0 0 82px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    color: #94a3b8;
+
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
 
-  .analysis-table th {
-    padding: 13px 14px;
-
-    font-size: 12px;
+  .analysis-table tbody td:nth-child(1)::before {
+    content: "Job";
   }
 
-  .analysis-table td {
-    padding: 14px;
+  .analysis-table tbody td:nth-child(2)::before {
+    content: "Company";
+  }
+
+  .analysis-table tbody td:nth-child(3)::before {
+    content: "Resume";
+  }
+
+  .analysis-table tbody td:nth-child(4)::before {
+    content: "Description";
+  }
+
+  .analysis-table tbody td:nth-child(5)::before {
+    content: "ATS";
+  }
+
+  .analysis-table tbody td:nth-child(6)::before {
+    content: "Date";
+  }
+
+  .analysis-table tbody td:nth-child(7)::before {
+    content: "Action";
+  }
+
+  /* ---------------------------------------------------------
+     CONTENT AREA
+     --------------------------------------------------------- */
+
+  .analysis-table tbody td > * {
+    min-width: 0;
+    max-width: calc(100% - 92px);
+  }
+
+  /* Job title */
+  .analysis-job-title {
+    display: block;
+
+    min-width: 0;
+    max-width: 100%;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Company */
+  .analysis-company {
+    display: block;
+
+    min-width: 0;
+    max-width: 100%;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Resume filename */
+  .analysis-resume-link {
+    display: block;
+
+    min-width: 0;
+    max-width: 100%;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    background: none;
+    border: none;
+
+    padding: 0;
+
+    color: #2563eb;
+
+    cursor: pointer;
+
+    text-align: left;
+  }
+
+  /* Missing resume */
+  .analysis-resume-missing {
+    color: #94a3b8;
+  }
+
+  /* Job description */
+  .analysis-description-preview {
+    display: flex;
+    align-items: center;
+
+    min-width: 0;
+    max-width: 100%;
+
+    overflow: hidden;
+
+    gap: 4px;
+  }
+
+  .analysis-description-preview > span {
+    min-width: 0;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .analysis-description-more {
+    flex-shrink: 0;
+
+    border: none;
+    background: transparent;
+
+    padding: 0;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    color: #64748b;
+
+    cursor: pointer;
+  }
+
+  /* ATS */
+  .analysis-score-badge {
+    flex-shrink: 0;
+  }
+
+  /* DATE - important */
+  .analysis-date {
+    display: block;
+
+    white-space: nowrap;
 
     font-size: 13px;
+    font-weight: 500;
+
+    color: #334155;
   }
 
-  .analysis-empty-card {
-    padding: 45px 20px;
+  /* ACTION */
+  .analysis-view-button {
+    flex-shrink: 0;
   }
 }

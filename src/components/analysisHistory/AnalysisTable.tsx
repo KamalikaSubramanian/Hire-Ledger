@@ -142,25 +142,7 @@ export default function AnalysisTable({ analyses }: Props) {
                           aria-label="View full job description"
                         >
                           ...
-                        </button>
-                        <Dialog
-                          open={selectedJobDescription !== null}
-                          onOpenChange={(open) => {
-                            if (!open) {
-                              setSelectedJobDescription(null);
-                            }
-                          }}
-                        >
-                          <DialogContent className="analysis-description-dialog">
-                            <DialogHeader>
-                              <DialogTitle>Job Description</DialogTitle>
-                            </DialogHeader>
-
-                            <div className="analysis-description-scroll">
-                              {jobDescription}
-                            </div>
-                          </DialogContent>
-                        </Dialog>
+                        </button>                  
                       </div>
                     </td>
 
