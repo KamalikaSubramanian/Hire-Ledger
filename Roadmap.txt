@@ -1,0 +1,467 @@
+Full User Flow
+Step 1: Onboarding
+
+User signs up / logs in (Google or email via NextAuth)
+User fills basic profile: Name, email, phone number (for notifications), and optionally connects LinkedIn (for follow-up tracking later)
+
+Step 2: Starting a New Check
+3. User clicks "New Application Check" from dashboard
+4. User uploads Resume (PDF) — system extracts text in background
+5. User uploads or pastes Job Description — system extracts text in background
+6. User enters application metadata:
+
+Company Name (e.g., Wipro)
+Job Position (e.g., Software Developer)
+Job Location
+Date of Application (defaults to today, editable)
+
+Step 3: AI Matching
+7. User clicks "Analyze Match"
+8. AI compares resume text vs JD text and returns:
+
+Match Score (%)
+Matched Skills list
+Missing Skills list
+2–3 improvement suggestions
+
+
+Result is shown instantly on screen as a summary card (score + skill breakdown)
+
+Step 4: Auto-Logging (system does this automatically, no extra user action)
+10. The system saves this check as a log entry under that user, tagged with:
+- Company name, position, location, date, resume file, JD text, score, missing skills
+11. The missing skills from this check are also pushed into the user's personal "Missing Skills Pool" — a running list aggregated across all their checks (so far, so good — matches your point 7)
+Step 5: Interview Prep Generation
+12. Immediately after the match result, user sees a button: "Generate Interview Prep for this Role"
+13. AI takes the JD + matched/missing skills and generates a topic-wise interview prep list (e.g., "DSA: Arrays & Recursion," "System Design: REST API basics," "Project Deep Dive: explain your MERN e-commerce app")
+14. This prep list is saved alongside that specific application log, so it's always tied to that company + role
+Step 6: Company-Wise Dashboard (your Meera example)
+15. User navigates to "My Applications" page
+16. Applications are grouped by Company Name as collapsible cards:
+- Wipro (2 applications)
+- Software Developer — Applied 12 Jan — Score 74% — [View Resume/JD/Missing Skills/Prep]
+- Backend Developer — Applied 15 Jan — Score 68% — [View Resume/JD/Missing Skills/Prep]
+17. Clicking any role expands full details: resume used, JD text, score, missing skills, interview prep, and a follow-up log (see next step)
+Step 7: Follow-Up Tracking
+18. Under each logged application, user can manually mark: "Followed up via Email" or "Followed up via LinkedIn," with a date/timestamp — this builds a follow-up history per application
+19. System calculates days-since-application automatically
+Step 8: Smart Notifications (AI + rule-based)
+20. A background job (cron/scheduled function) checks daily: if an application has had no follow-up logged within X days (e.g., 5–7 days), trigger a notification
+21. Notification sent via push notification (web push / PWA) or email, e.g.: "You applied to Wipro (Backend Developer) 6 days ago — consider following up."
+22. AI can optionally personalize the notification text (e.g., suggest a follow-up message draft) rather than a generic template
+Step 9: Skill Gap Insights (recurring view)
+23. User visits "My Missing Skills" page — separate from individual applications
+24. Shows an aggregated, ranked list: which skills appear most frequently across all their applications (e.g., "Docker missing in 6/9 applications")
+25. This gives the user a prioritized personal learning roadmap, independent of any single company
+Step 10: Ongoing Use Loop
+26. Every time the user applies to a new role, they repeat Steps 2–5
+27. Over time, the dashboard (Steps 6, 9) becomes richer — showing patterns like "your scores are improving," "these are your top 3 recurring gaps," "these are companies you've applied to multiple times"
+
+Fully Doable with Just Next.js + TypeScript + MongoDB + AI + Redux
+
+
+
+=========================================================
+HIRE LEDGER - COMPLETE DEVELOPMENT ROADMAP (27 MODULES)
+=========================================================
+
+Module 1: Project Initialization
+
+Features:
+• Create Next.js project
+• Configure TypeScript
+• Install Tailwind CSS
+• Configure ESLint
+• Configure Prettier
+• Setup App Router
+• Create Folder Structure
+• Configure Environment Variables (.env.local)
+• Create Constants Folder
+• Create Utility Functions
+• Create Shared Components Folder
+• Setup Global Layout
+• Configure Theme Provider (Light/Dark)
+• Setup Zustand/Redux Store
+
+---------------------------------------------------------
+
+Module 2: Authentication & Authorization
+
+Features:
+• Setup Clerk/Auth.js
+• Google Sign In
+• Email/Password Login (if Auth.js)
+• User Registration (Sign Up)
+• User Login
+• User Logout
+• Session Management
+• Middleware Protection
+• Protected Routes
+• Public Routes
+• Authentication Flow
+
+---------------------------------------------------------
+
+Module 3: Database Setup
+
+Features:
+• Connect MongoDB Atlas
+• Configure Mongoose
+• Connection Caching
+• Database Utility File
+• Create User Model
+• Create Application Model
+• Create InterviewPrep Model
+• Create Notification Model
+• Create SkillPool Model
+• Create Database Indexes
+• Add Schema Validation
+
+---------------------------------------------------------
+
+Module 4: User Profile Management
+
+Features:
+• Create Profile Page
+• View Profile
+• Edit Profile
+• Update Name
+• Update Email
+• Update Phone Number
+• Update LinkedIn URL
+• Upload Avatar
+• Delete Avatar
+• Form Validation
+• Profile Update APIs
+
+---------------------------------------------------------
+
+Module 5: Dashboard Layout
+
+Features:
+• Sidebar
+• Navbar
+• User Dropdown
+• Theme Toggle
+• Dashboard Layout
+• Responsive Navigation
+• Mobile Menu
+• Breadcrumbs
+• Dashboard Home
+• Protected Dashboard Layout
+
+---------------------------------------------------------
+
+Module 6: New Application Workflow
+
+Features:
+• Resume Upload
+• Job Description Upload
+• Drag & Drop Upload
+• File Preview
+• Company Name
+• Job Position
+• Job Location
+• Apply Date Picker
+• Form Validation
+• Loading State
+• Error Handling
+• Analyze Match Button
+
+---------------------------------------------------------
+
+Module 7: Resume & Job Description Parsing
+
+Features:
+• PDF Upload
+• DOCX Upload
+• pdf-parse Integration
+• Mammoth Integration
+• Resume Text Extraction
+• Job Description Text Extraction
+• Text Cleaning
+• Text Normalization
+• Save Parsed Text
+
+---------------------------------------------------------
+
+Module 8: AI Match Analysis
+
+Features:
+• OpenAI Integration
+• Prompt Engineering
+• Resume vs JD Comparison
+• Match Score
+• Matched Skills
+• Missing Skills
+• Improvement Suggestions
+• JSON Response Parsing
+• Error Handling
+
+---------------------------------------------------------
+
+Module 9: Application Persistence
+
+Features:
+• Save Application
+• Save Resume Information
+• Save Job Description
+• Save Company
+• Save Position
+• Save Location
+• Save Match Score
+• Save Matched Skills
+• Save Missing Skills
+• Save Suggestions
+• MongoDB CRUD APIs
+
+---------------------------------------------------------
+
+Module 10: Dashboard Overview
+
+Features:
+• Total Applications Card
+• Average Score Card
+• Highest Score Card
+• Lowest Score Card
+• Pending Follow-ups Card
+• Recent Applications
+• Quick Statistics
+• Dashboard Summary
+
+---------------------------------------------------------
+
+Module 11: Company-wise Applications
+
+Features:
+• Group by Company
+• Accordion UI
+• Expand Applications
+• Collapse Applications
+• Company Cards
+• Application Count
+• Responsive Layout
+
+---------------------------------------------------------
+
+Module 12: Application Details
+
+Features:
+• Resume Viewer
+• JD Viewer
+• Match Score
+• Matched Skills
+• Missing Skills
+• Suggestions
+• Interview Prep Section
+• Timeline
+• Follow-up History
+
+---------------------------------------------------------
+
+Module 13: Interview Preparation Generator
+
+Features:
+• AI Prompt Generation
+• DSA Topics
+• React Questions
+• Backend Questions
+• Database Questions
+• HR Questions
+• Behavioral Questions
+• Project Questions
+• Coding Questions
+• Save Interview Preparation
+
+---------------------------------------------------------
+
+Module 14: Follow-up Tracker
+
+Features:
+• Add Follow-up
+• Email Follow-up
+• LinkedIn Follow-up
+• Phone Follow-up
+• Referral Follow-up
+• Notes
+• Timeline
+• Follow-up History
+
+---------------------------------------------------------
+
+Module 15: Application Timeline
+
+Features:
+• Applied Date
+• Days Since Applied
+• Last Follow-up Date
+• Timeline View
+• Status Badge
+• Pending Status
+• Application Progress
+
+---------------------------------------------------------
+
+Module 16: Notification Engine
+
+Features:
+• Daily Cron Job
+• Detect Pending Follow-ups
+• Reminder Rules
+• Create Notifications
+• Save Notification History
+• Notification Status
+
+---------------------------------------------------------
+
+Module 17: Email Notifications
+
+Features:
+• Resend Integration
+• Nodemailer Integration
+• Reminder Emails
+• AI Follow-up Draft
+• Interview Tips Email
+• Email Templates
+• Email Logging
+
+---------------------------------------------------------
+
+Module 18: Web Push Notifications
+
+Features:
+• Browser Notification Permission
+• Notification API
+• Push Notification Service
+• PWA Configuration
+• Push Reminder
+• Notification Click Actions
+
+---------------------------------------------------------
+
+Module 19: Missing Skills Pool
+
+Features:
+• Aggregate Missing Skills
+• Count Skill Frequency
+• Rank Skills
+• Charts
+• Progress Indicators
+• Skill Categories
+• Skills Dashboard
+
+---------------------------------------------------------
+
+Module 20: AI Learning Roadmap
+
+Features:
+• Generate Weekly Learning Plan
+• Prioritize Skills
+• Learning Timeline
+• AI Suggestions
+• Recommended Topics
+• Personalized Roadmap
+• Learning Progress
+
+---------------------------------------------------------
+
+Module 21: Search System
+
+Features:
+• Search by Company
+• Search by Position
+• Search by Location
+• Search by Skill
+• Search by Date
+• Global Search
+
+---------------------------------------------------------
+
+Module 22: Advanced Filters
+
+Features:
+• Filter by Company
+• Filter by Position
+• Filter by Date
+• Filter by Score
+• Filter by Status
+• Multi-filter Support
+
+---------------------------------------------------------
+
+Module 23: Analytics & Reports
+
+Features:
+• Score Trend Chart
+• Applications Chart
+• Success Rate
+• Monthly Statistics
+• Missing Skills Chart
+• Top Skills Chart
+• Performance Insights
+
+---------------------------------------------------------
+
+Module 24: Settings & Preferences
+
+Features:
+• Profile Settings
+• Theme Settings
+• Notification Settings
+• Delete Account
+• Password Settings (if applicable)
+• Privacy Settings
+• Account Preferences
+
+---------------------------------------------------------
+
+Module 25: Performance Optimization
+
+Features:
+• Pagination
+• Lazy Loading
+• Memoization
+• Server Components
+• API Optimization
+• Image Optimization
+• Database Query Optimization
+• Caching
+
+---------------------------------------------------------
+
+Module 26: Deployment
+
+Features:
+• Deploy to Vercel
+• Configure MongoDB Atlas Production
+• Environment Variables
+• Custom Domain
+• SEO Setup
+• Robots.txt
+• Sitemap.xml
+• Security Headers
+• Production Testing
+
+---------------------------------------------------------
+
+Module 27: Final Polish
+
+Features:
+• Loading Skeletons
+• Smooth Animations
+• Responsive Design
+• Accessibility (ARIA)
+• Custom Error Pages
+• Unit Testing
+• Integration Testing
+• README Documentation
+• Portfolio Screenshots
+• Code Cleanup
+• Final Bug Fixes
+• Production Ready Review
+
+=========================================================
+END OF ROADMAP
+=========================================================
+
+

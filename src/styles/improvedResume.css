@@ -1,0 +1,562 @@
+/* =========================================================
+   IMPROVED RESUME PAGE
+========================================================= */
+
+.improved-resume-page {
+  width: 100%;
+  min-height: 100vh;
+
+  padding: 28px 24px 50px;
+
+  background: hsl(var(--background));
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
+
+.improved-resume-container {
+  width: 100%;
+  max-width: 1450px;
+
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.improved-resume-header {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  margin-bottom: 28px;
+}
+
+
+/* =========================================================
+   HEADER TEXT
+========================================================= */
+
+.improved-resume-header-content {
+  min-width: 0;
+}
+
+.improved-resume-title {
+  margin: 0;
+
+  font-size: 30px;
+  line-height: 1.25;
+
+  font-weight: 700;
+
+  color: hsl(var(--foreground));
+}
+
+.improved-resume-description {
+  margin: 7px 0 0;
+
+  max-width: 700px;
+
+  font-size: 15px;
+  line-height: 1.6;
+
+  color: hsl(var(--muted-foreground));
+}
+
+
+/* =========================================================
+   HEADER ACTIONS
+========================================================= */
+
+.improved-resume-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   RESUME CONTAINER
+========================================================= */
+
+.improved-resume-wrapper {
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+
+  padding: 28px;
+
+  border: 1px solid hsl(var(--border));
+
+  border-radius: 16px;
+
+  background: hsl(270 100% 98%);
+
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.04),
+    0 12px 30px rgba(0, 0, 0, 0.03);
+}
+
+
+/* =========================================================
+   ACTUAL RESUME
+========================================================= */
+
+.resume-page {
+  width: 100%;
+  max-width: 210mm;
+
+  min-height: 297mm;
+
+  margin: 0 auto;
+
+  background: white;
+
+  color: #111827;
+
+  padding: 15mm;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.10),
+    0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================================================
+   RESUME SECTION SPACING
+========================================================= */
+
+.resume-page > section {
+  margin-bottom: 18px;
+}
+
+.resume-page > section:last-child {
+  margin-bottom: 0;
+}
+
+
+/* =========================================================
+   EDIT MODE
+========================================================= */
+
+.resume-page textarea,
+.resume-page input {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  font-family: inherit;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 6px;
+
+  padding: 7px 9px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #111827;
+}
+
+.resume-page textarea:focus,
+.resume-page input:focus {
+  border-color: hsl(var(--primary));
+
+  box-shadow:
+    0 0 0 2px hsl(var(--primary) / 0.12);
+}
+
+
+/* =========================================================
+   EDITABLE TEXT
+========================================================= */
+
+.resume-page [contenteditable="true"] {
+  outline: 1px dashed hsl(var(--primary) / 0.4);
+
+  outline-offset: 3px;
+
+  border-radius: 3px;
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+.dark .improved-resume-page {
+  background: hsl(var(--background));
+}
+
+.dark .improved-resume-wrapper {
+  background: hsl(270 30% 12%);
+
+  border-color: hsl(var(--border));
+}
+
+.dark .resume-page {
+  background: white;
+
+  color: #111827;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+  .improved-resume-page {
+    padding: 24px 18px 40px;
+  }
+
+  .improved-resume-wrapper {
+    padding: 20px;
+  }
+
+  .improved-resume-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 18px;
+  }
+
+  .improved-resume-actions {
+    width: 100%;
+  }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 768px) {
+  .improved-resume-page {
+    padding: 20px 12px 35px;
+  }
+
+  .improved-resume-title {
+    font-size: 25px;
+  }
+
+  .improved-resume-description {
+    font-size: 14px;
+  }
+
+  .improved-resume-wrapper {
+    padding: 12px;
+
+    border-radius: 12px;
+  }
+
+  .resume-page {
+    padding: 10mm;
+
+    box-shadow:
+      0 3px 10px rgba(0, 0, 0, 0.08);
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 520px) {
+  .improved-resume-page {
+    padding: 16px 8px 30px;
+  }
+
+  .improved-resume-title {
+    font-size: 22px;
+  }
+
+  .improved-resume-description {
+    font-size: 13px;
+  }
+
+  .improved-resume-actions {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    width: 100%;
+  }
+
+  .improved-resume-actions button {
+    width: 100%;
+  }
+
+  .improved-resume-actions button:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .improved-resume-wrapper {
+    padding: 7px;
+
+    border-radius: 10px;
+
+    overflow-x: auto;
+
+    justify-content: flex-start;
+  }
+
+  .resume-page {
+    min-width: 210mm;
+
+    padding: 8mm;
+  }
+}
+
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@media print {
+  .improved-resume-page {
+    padding: 0;
+
+    background: white;
+  }
+
+  .improved-resume-header {
+    display: none;
+  }
+
+  .improved-resume-wrapper {
+    padding: 0;
+
+    border: none;
+
+    box-shadow: none;
+
+    background: white;
+  }
+
+  .resume-page {
+    width: 210mm;
+
+    min-height: 297mm;
+
+    margin: 0;
+
+    padding: 15mm;
+
+    box-shadow: none;
+  }
+}
+
+/* =========================================================
+   RESUME HEADER
+========================================================= */
+
+.resume-header {
+  width: 100%;
+
+  margin-bottom: 28px;
+  padding-bottom: 18px;
+
+  border-bottom: 2px solid #111827;
+
+  text-align: center;
+}
+
+/* =========================================================
+   NAME
+========================================================= */
+
+.resume-header-name {
+  width: 100%;
+
+  margin-bottom: 10px;
+}
+
+.resume-name-input {
+  width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  border: none !important;
+  outline: none !important;
+
+  background: transparent !important;
+
+  color: #111827 !important;
+
+  font-family: inherit;
+  font-size: 30px;
+  line-height: 1.15;
+  font-weight: 750;
+
+  letter-spacing: -0.03em;
+
+  text-align: center;
+
+  box-shadow: none !important;
+}
+
+/*
+  When the name is not being edited,
+  make it look like normal resume text.
+*/
+
+.resume-name-input:not(:focus) {
+  box-shadow: none !important;
+}
+
+/* =========================================================
+   CONTACT INFORMATION
+========================================================= */
+
+.resume-contact-details {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+  gap: 7px;
+
+  color: #4b5563;
+
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   CONTACT ITEM
+========================================================= */
+
+.resume-contact-item {
+  width: auto !important;
+  min-width: 0;
+
+  margin: 0;
+  padding: 0;
+
+  border: none !important;
+  outline: none !important;
+
+  background: transparent !important;
+
+  color: #4b5563 !important;
+
+  font-family: inherit;
+
+  font-size: 11px;
+  line-height: 1.5;
+
+  box-shadow: none !important;
+
+  text-align: center;
+}
+
+/* =========================================================
+   CONTACT SEPARATOR
+========================================================= */
+
+.resume-contact-separator {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #9ca3af;
+
+  font-size: 10px;
+  line-height: 1;
+}
+
+/* =========================================================
+   EDITING STATE
+========================================================= */
+
+.resume-header input:focus {
+  border: none !important;
+  outline: none !important;
+
+  box-shadow: none !important;
+}
+
+/*
+  Give editable fields a subtle indication
+  while editing, without changing the resume design.
+*/
+
+.resume-header input:hover {
+  background: rgba(99, 102, 241, 0.04) !important;
+}
+
+/* =========================================================
+   MOBILE / NARROW PREVIEW
+========================================================= */
+
+@media (max-width: 700px) {
+  .resume-header {
+    margin-bottom: 22px;
+    padding-bottom: 15px;
+  }
+
+  .resume-name-input {
+    font-size: 25px;
+  }
+
+  .resume-contact-details {
+    gap: 5px;
+    font-size: 10px;
+  }
+
+  .resume-contact-item {
+    font-size: 10px;
+  }
+}
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@media print {
+  .resume-header {
+    margin-bottom: 22px;
+    padding-bottom: 14px;
+
+    border-bottom: 1.5px solid #111827;
+  }
+
+  .resume-name-input {
+    font-size: 28px;
+  }
+
+  .resume-contact-details,
+  .resume-contact-item {
+    font-size: 10px;
+  }
+
+  .resume-header input {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+}

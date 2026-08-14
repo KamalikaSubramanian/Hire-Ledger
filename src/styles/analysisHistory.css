@@ -1,0 +1,588 @@
+/* =========================================================
+   ANALYSIS HISTORY PAGE
+========================================================= */
+
+.analysis-history-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.analysis-history-header {
+  width: 100%;
+}
+
+.analysis-history-title {
+  margin: 0;
+
+  font-size: 30px;
+  line-height: 1.25;
+  font-weight: 700;
+
+  color: hsl(var(--foreground));
+}
+
+.analysis-history-description {
+  margin: 8px 0 0;
+
+  font-size: 15px;
+  line-height: 1.6;
+
+  color: hsl(var(--muted-foreground));
+}
+
+/* =========================================================
+   SEARCH CARD
+========================================================= */
+
+.analysis-search-card {
+  width: 100%;
+
+  padding: 20px 22px;
+
+  background: hsl(270 100% 98%);
+
+  border: 1px solid hsl(var(--border));
+  border-radius: 14px;
+
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.04);
+
+  transition:
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.analysis-search-card:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+
+  border-color: hsl(var(--primary) / 0.25);
+}
+
+.analysis-search-wrapper {
+  position: relative;
+
+  width: 100%;
+  max-width: 600px;
+}
+
+.analysis-search-icon {
+  position: absolute;
+
+  left: 14px;
+  top: 50%;
+
+  width: 18px;
+  height: 18px;
+
+  transform: translateY(-50%);
+
+  color: hsl(var(--muted-foreground));
+
+  pointer-events: none;
+}
+
+.analysis-search-input {
+  width: 100%;
+
+  min-height: 44px;
+
+  padding-left: 44px;
+
+  font-size: 14px;
+}
+
+/* =========================================================
+   ANALYSIS FILTERS
+========================================================= */
+
+.analysis-filters {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 18px;
+
+  padding: 22px;
+
+  border: 1px solid hsl(var(--border));
+  border-radius: 16px;
+
+  background: hsl(270 100% 98%);
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.analysis-filter-input {
+  width: 100%;
+
+  min-height: 46px;
+
+  border: 1px solid hsl(var(--border));
+
+  border-radius: 10px;
+
+  background: hsl(var(--background));
+
+  color: hsl(var(--foreground));
+
+  font-size: 14px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.analysis-filter-input:focus {
+  border-color: hsl(var(--primary));
+
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.12);
+}
+
+/* =========================================================
+   SELECT TRIGGER
+========================================================= */
+
+.analysis-filter-trigger {
+  width: 100%;
+
+  min-height: 46px;
+
+  border: 1px solid hsl(var(--border));
+
+  border-radius: 10px;
+
+  background: hsl(var(--background));
+
+  color: hsl(var(--foreground));
+
+  font-size: 14px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.analysis-filter-trigger:hover {
+  border-color: hsl(var(--primary) / 0.45);
+}
+
+.analysis-filter-trigger:focus {
+  border-color: hsl(var(--primary));
+
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.12);
+}
+
+/* =========================================================
+   SELECT DROPDOWN
+   IMPORTANT: KEEP THIS ABOVE TABLE
+========================================================= */
+
+.analysis-select-content {
+  z-index: 99999 !important;
+
+  min-width: 220px;
+
+  padding: 6px;
+
+  border: 1px solid hsl(var(--border));
+
+  border-radius: 10px;
+
+  background: #ffffff !important;
+
+  color: #1f2937 !important;
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.18),
+    0 4px 10px rgba(0, 0, 0, 0.08);
+
+  opacity: 1 !important;
+
+  backdrop-filter: none !important;
+}
+
+/* =========================================================
+   SELECT OPTIONS
+========================================================= */
+
+.analysis-select-content [role="option"] {
+  min-height: 40px;
+
+  padding: 9px 12px;
+
+  border-radius: 7px;
+
+  color: #1f2937 !important;
+
+  background: transparent;
+
+  font-size: 14px;
+
+  font-weight: 500;
+
+  cursor: pointer;
+
+  outline: none;
+
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+/* Hover option */
+
+.analysis-select-content [role="option"]:hover {
+  background: hsl(270 100% 96%) !important;
+
+  color: hsl(270 70% 35%) !important;
+}
+
+/* Selected option */
+
+.analysis-select-content [role="option"][data-state="checked"] {
+  background: hsl(270 100% 94%) !important;
+
+  color: hsl(270 70% 35%) !important;
+
+  font-weight: 600;
+}
+
+/* =========================================================
+   DROPDOWN ARROW
+========================================================= */
+
+.analysis-select-content svg {
+  color: hsl(270 70% 45%);
+}
+
+/* =========================================================
+   TABLE MUST NOT COVER DROPDOWN
+========================================================= */
+
+.analysis-table-wrapper {
+  position: relative;
+
+  z-index: 1;
+}
+
+/* =========================================================
+   FILTERS MUST BE ABOVE TABLE
+========================================================= */
+
+.analysis-filters {
+  position: relative;
+
+  z-index: 20;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+  .analysis-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .analysis-filters {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+
+    padding: 16px;
+  }
+}
+/* =========================================================
+   TABLE CARD
+========================================================= */
+
+.analysis-table-card {
+  width: 100%;
+
+  overflow: hidden;
+
+  background: hsl(270 100% 98%);
+
+  border: 1px solid hsl(var(--border));
+  border-radius: 14px;
+
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.04);
+
+  transition:
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.analysis-table-card:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+
+  border-color: hsl(var(--primary) / 0.25);
+}
+
+/* =========================================================
+   TABLE WRAPPER
+========================================================= */
+
+.analysis-table-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.analysis-table {
+  width: 100%;
+
+  min-width: 760px;
+
+  border-collapse: collapse;
+
+  font-size: 14px;
+}
+
+/* =========================================================
+   TABLE HEADER
+========================================================= */
+
+.analysis-table thead {
+  background: hsl(270 50% 94%);
+}
+
+.analysis-table th {
+  padding: 16px 20px;
+
+  text-align: left;
+
+  font-size: 13px;
+  font-weight: 650;
+
+  white-space: nowrap;
+
+  color: hsl(var(--foreground));
+
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+/* =========================================================
+   TABLE BODY
+========================================================= */
+
+.analysis-table tbody tr {
+  border-bottom: 1px solid hsl(var(--border));
+
+  transition: background-color 0.15s ease;
+}
+
+.analysis-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.analysis-table tbody tr:hover {
+  background: hsl(270 50% 96%);
+}
+
+.analysis-table td {
+  padding: 17px 20px;
+
+  font-size: 14px;
+  line-height: 1.5;
+
+  color: hsl(var(--foreground));
+
+  vertical-align: middle;
+}
+
+/* =========================================================
+   JOB TITLE
+========================================================= */
+
+.analysis-job-title {
+  font-weight: 600;
+
+  color: hsl(var(--foreground));
+}
+
+/* =========================================================
+   COMPANY
+========================================================= */
+
+.analysis-company {
+  color: hsl(var(--muted-foreground));
+
+  font-weight: 500;
+}
+
+/* =========================================================
+   DATE
+========================================================= */
+
+.analysis-date {
+  color: hsl(var(--muted-foreground));
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   ATS SCORE
+========================================================= */
+
+.analysis-score-badge {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 64px;
+
+  padding: 6px 10px;
+
+  border-radius: 999px;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+/* Good score */
+
+.analysis-score-high {
+  background: rgb(220 252 231);
+  color: rgb(21 128 61);
+}
+
+/* Average score */
+
+.analysis-score-medium {
+  background: rgb(254 249 195);
+  color: rgb(161 98 7);
+}
+
+/* Low score */
+
+.analysis-score-low {
+  background: rgb(254 226 226);
+  color: rgb(185 28 28);
+}
+
+/* =========================================================
+   VIEW BUTTON
+========================================================= */
+
+.analysis-view-button {
+  min-width: 70px;
+
+  font-size: 13px;
+}
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.analysis-empty-card {
+  width: 100%;
+
+  padding: 60px 30px;
+
+  text-align: center;
+
+  background: hsl(270 100% 98%);
+
+  border: 1px solid hsl(var(--border));
+  border-radius: 14px;
+
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.04);
+}
+
+.analysis-empty-title {
+  margin: 0;
+
+  font-size: 20px;
+
+  font-weight: 650;
+
+  color: hsl(var(--foreground));
+}
+
+.analysis-empty-description {
+  margin: 8px 0 0;
+
+  font-size: 14px;
+
+  color: hsl(var(--muted-foreground));
+}
+
+/* =========================================================
+   RESPONSIVE - TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+  .analysis-filters-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+========================================================= */
+
+@media (max-width: 640px) {
+  .analysis-history-container {
+    gap: 16px;
+  }
+
+  .analysis-history-title {
+    font-size: 25px;
+  }
+
+  .analysis-history-description {
+    font-size: 14px;
+  }
+
+  .analysis-search-card,
+  .analysis-filters-card {
+    padding: 16px;
+  }
+
+  .analysis-filters-grid {
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+  }
+
+  .analysis-table-card {
+    border-radius: 12px;
+  }
+
+  .analysis-table th {
+    padding: 13px 14px;
+
+    font-size: 12px;
+  }
+
+  .analysis-table td {
+    padding: 14px;
+
+    font-size: 13px;
+  }
+
+  .analysis-empty-card {
+    padding: 45px 20px;
+  }
+}

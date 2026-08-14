@@ -1,65 +1,202 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+
+import {
+  ArrowRight,
+  BarChart3,
+  BrainCircuit,
+  FileSearch,
+  Sparkles,
+  Target,
+  Wrench,
+} from "lucide-react";
+
+const features = [
+  {
+    title: "Resume Analysis",
+    icon: FileSearch,
+    description:
+      "Analyze your resume against any job description and understand exactly where you stand.",
+  },
+  {
+    title: "ATS Score",
+    icon: Target,
+    description:
+      "Measure ATS compatibility and get practical suggestions to improve your resume.",
+  },
+  {
+    title: "Skill Intelligence",
+    icon: BrainCircuit,
+    description:
+      "Discover missing skills and understand which abilities can strengthen your profile.",
+  },
+  {
+    title: "Resume Improvement",
+    icon: Wrench,
+    description:
+      "Identify weak areas and get AI-powered recommendations to make your resume stronger.",
+  },
+  {
+    title: "Dashboard Analytics",
+    icon: BarChart3,
+    description:
+      "Track your analysis history, ATS performance, scores, and resume progress in one place.",
+  },
+  {
+    title: "AI Powered",
+    icon: Sparkles,
+    description:
+      "Use AI-driven insights to make better resume decisions and improve your interview opportunities.",
+  },
+];
+
+export default function HomePage() {
+  const router = useRouter();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main className="home-page">
+      {/* Hero */}
+      <section className="home-hero">
+        <div className="hero-orb hero-orb-blue" />
+        <div className="hero-orb hero-orb-pink" />
+        <div className="hero-orb hero-orb-purple" />
+
+        <div className="home-hero-content">
+          <div className="home-badge animate-fade-up">
+            <Sparkles className="h-4 w-4" />
+            <span>AI Resume Intelligence Platform</span>
+          </div>
+
+          <h1 className="home-title animate-fade-up">
+            Hire <span className="home-title-gradient">Ledger</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+
+          <p className="home-description animate-fade-up">
+            Analyze your resume, improve ATS compatibility, discover skill gaps,
+            and make smarter career decisions with AI-powered insights.
+          </p>
+
+          <div className="home-actions animate-fade-up">
+            <Button
+              size="lg"
+              className="home-primary-button"
+              onClick={() => router.push("/sign-up")}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              Get Started
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+
+            <Button
+              size="lg"
+              variant="outline"
+              className="home-secondary-button"
+              onClick={() => router.push("/sign-in")}
             >
-              Learning
-            </a>{" "}
-            center.
+              Sign In
+            </Button>
+          </div>
+
+          <div className="home-trust animate-fade-up">
+            <span className="home-trust-item">
+              <span className="home-trust-dot" />
+              AI-powered analysis
+            </span>
+
+            <span className="home-trust-divider" />
+
+            <span>ATS compatibility</span>
+
+            <span className="home-trust-divider" />
+
+            <span>Career insights</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="home-features">
+        <div className="home-section-container">
+          <div className="home-section-heading">
+            <div className="home-section-badge">
+              <Sparkles className="h-4 w-4" />
+              <span>Powerful tools</span>
+            </div>
+
+            <h2>Everything You Need to Improve Your Resume</h2>
+
+            <p>
+              Hire Ledger brings resume analysis, skill intelligence, ATS
+              insights, and career preparation together in one platform.
+            </p>
+          </div>
+
+          <div className="home-feature-grid stagger-children">
+            {features.map((feature) => {
+              const Icon = feature.icon;
+
+              return (
+                <div key={feature.title} className="home-feature-card">
+                  <div className="home-feature-icon">
+                    <Icon />
+                  </div>
+
+                  <h3>{feature.title}</h3>
+
+                  <p>{feature.description}</p>
+
+                  <div className="home-feature-accent" />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="home-cta-section">
+        <div className="home-cta">
+          <div className="home-cta-content">
+            <div className="home-cta-label">
+              <Sparkles className="h-5 w-5" />
+              <span>Start your career improvement journey</span>
+            </div>
+
+            <h2>Ready to make your resume stronger?</h2>
+
+            <p>
+              Analyze your resume and discover exactly what you can improve.
+            </p>
+          </div>
+
+          <Button
+            size="lg"
+            className="home-cta-button"
+            onClick={() => router.push("/sign-up")}
+          >
+            Start Analyzing
+            <ArrowRight className="ml-2 h-5 w-5" />
+          </Button>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="home-footer">
+        <div className="home-footer-inner">
+          <div>
+            <p className="home-footer-title">Hire Ledger</p>
+
+            <p className="home-footer-description">
+              AI-powered resume intelligence for smarter job applications.
+            </p>
+          </div>
+
+          <p className="home-footer-copyright">
+            © {new Date().getFullYear()} Hire Ledger
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </footer>
+    </main>
   );
 }

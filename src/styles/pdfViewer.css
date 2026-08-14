@@ -1,0 +1,432 @@
+/* =========================================================
+   PDF VIEWER
+========================================================= */
+
+.pdf-viewer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
+
+.pdf-viewer-toolbar {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  padding: 16px 20px;
+
+  border: 1px solid hsl(var(--border));
+  border-radius: 16px;
+
+  background: hsl(270 100% 98%);
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+  transition:
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.pdf-viewer-toolbar:hover {
+  border-color: hsl(var(--primary) / 0.25);
+
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.07);
+}
+
+/* =========================================================
+   ACTION GROUP
+========================================================= */
+
+.pdf-viewer-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* =========================================================
+   COMMON BUTTON
+========================================================= */
+
+.pdf-viewer-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  min-height: 40px;
+
+  padding: 9px 14px;
+
+  border: 1px solid hsl(var(--border));
+  border-radius: 9px;
+
+  background: hsl(var(--background));
+
+  color: hsl(var(--foreground));
+
+  font-size: 14px;
+  font-weight: 550;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.pdf-viewer-button:hover {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+
+  border-color: hsl(var(--primary));
+
+  box-shadow: 0 3px 10px hsl(var(--primary) / 0.2);
+
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   CONTROL GROUP
+========================================================= */
+
+.pdf-viewer-control-group {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  padding: 4px;
+
+  border: 1px solid hsl(var(--border));
+  border-radius: 10px;
+
+  background: hsl(var(--background));
+}
+
+/* =========================================================
+   ICON BUTTON
+========================================================= */
+
+.pdf-viewer-icon-button {
+  width: 36px;
+  height: 36px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid transparent;
+  border-radius: 8px;
+
+  background: transparent;
+
+  color: hsl(var(--foreground));
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.pdf-viewer-icon-button:hover:not(:disabled) {
+  background: hsl(var(--primary) / 0.1);
+
+  color: hsl(var(--primary));
+
+  border-color: hsl(var(--primary) / 0.15);
+
+  transform: translateY(-1px);
+}
+
+.pdf-viewer-icon-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.pdf-viewer-icon-button:disabled {
+  opacity: 0.35;
+
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   ZOOM VALUE
+========================================================= */
+
+.pdf-viewer-zoom {
+  min-width: 58px;
+
+  text-align: center;
+
+  color: hsl(var(--foreground));
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+
+.pdf-viewer-pagination {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 4px;
+
+  border: 1px solid hsl(var(--border));
+  border-radius: 10px;
+
+  background: hsl(var(--background));
+}
+
+/* =========================================================
+   PAGE NUMBER
+========================================================= */
+
+.pdf-viewer-page-number {
+  min-width: 70px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  color: hsl(var(--muted-foreground));
+
+  font-size: 13px;
+}
+
+.pdf-viewer-page-number strong {
+  color: hsl(var(--foreground));
+
+  font-weight: 650;
+}
+
+/* =========================================================
+   PDF STAGE
+========================================================= */
+
+.pdf-viewer-stage {
+  width: 100%;
+
+  min-height: 700px;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  overflow: auto;
+
+  padding: 34px;
+
+  border: 1px solid hsl(var(--border));
+  border-radius: 18px;
+
+  background: linear-gradient(135deg, hsl(270 100% 98%), hsl(270 60% 96%));
+
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+/* =========================================================
+   PDF DOCUMENT
+========================================================= */
+
+.pdf-viewer-document {
+  display: flex;
+  justify-content: center;
+
+  min-width: max-content;
+
+  padding: 4px;
+}
+
+/* =========================================================
+   PDF PAGE
+========================================================= */
+
+.pdf-viewer-document .react-pdf__Page {
+  overflow: hidden;
+
+  background: white;
+
+  border-radius: 3px;
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.16),
+    0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================================================
+   PDF CANVAS
+========================================================= */
+
+.pdf-viewer-document .react-pdf__Page canvas {
+  display: block;
+
+  max-width: none;
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.pdf-viewer-loading {
+  min-width: 320px;
+  min-height: 300px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: hsl(var(--muted-foreground));
+
+  font-size: 14px;
+}
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.pdf-viewer-error {
+  min-width: 320px;
+  min-height: 200px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  border-radius: 12px;
+
+  background: hsl(0 100% 97%);
+
+  border: 1px solid hsl(0 80% 88%);
+
+  color: rgb(185 28 28);
+
+  font-size: 14px;
+
+  font-weight: 550;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+  .pdf-viewer-toolbar {
+    flex-wrap: wrap;
+
+    justify-content: center;
+  }
+
+  .pdf-viewer-actions {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .pdf-viewer-stage {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .pdf-viewer {
+    gap: 12px;
+  }
+
+  .pdf-viewer-toolbar {
+    padding: 12px;
+
+    border-radius: 12px;
+
+    gap: 10px;
+  }
+
+  .pdf-viewer-actions {
+    justify-content: stretch;
+  }
+
+  .pdf-viewer-button {
+    flex: 1;
+
+    padding: 8px 10px;
+
+    font-size: 13px;
+  }
+
+  .pdf-viewer-control-group,
+  .pdf-viewer-pagination {
+    flex: 1;
+
+    justify-content: center;
+  }
+
+  .pdf-viewer-stage {
+    min-height: 500px;
+
+    padding: 15px;
+
+    border-radius: 14px;
+  }
+
+  .pdf-viewer-zoom {
+    min-width: 48px;
+  }
+}
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@media print {
+  .pdf-viewer-toolbar {
+    display: none;
+  }
+
+  .pdf-viewer-stage {
+    padding: 0;
+
+    border: none;
+
+    background: white;
+
+    box-shadow: none;
+
+    overflow: visible;
+  }
+
+  .pdf-viewer-document {
+    padding: 0;
+  }
+
+  .pdf-viewer-document .react-pdf__Page {
+    box-shadow: none;
+
+    border-radius: 0;
+  }
+}

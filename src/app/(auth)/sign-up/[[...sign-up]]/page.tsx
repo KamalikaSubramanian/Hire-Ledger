@@ -1,0 +1,15 @@
+import { SignUp } from "@clerk/nextjs";
+
+export default function SignUpPage() {
+  return (
+    <SignUp
+    signInUrl="/sign-in"
+    forceRedirectUrl="/dashboard"
+      appearance={{
+        elements: {
+          card: "shadow-xl",
+        },
+      }}
+    />
+  );
+}

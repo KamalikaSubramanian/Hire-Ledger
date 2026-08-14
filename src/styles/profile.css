@@ -1,0 +1,599 @@
+/* =========================================================
+   PROFILE PAGE
+========================================================= */
+
+.profile-page {
+  width: 100%;
+  min-height: 100%;
+}
+
+.profile-page-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.profile-page-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  margin-bottom: 32px;
+}
+
+.profile-header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 46px;
+  height: 46px;
+
+  flex-shrink: 0;
+
+  border-radius: 14px;
+
+  background: color-mix(
+    in srgb,
+    var(--primary) 10%,
+    transparent
+  );
+
+  color: var(--primary);
+}
+
+.profile-header-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.profile-page-title {
+  margin: 0;
+
+  color: var(--foreground);
+
+  font-size: 2rem;
+  line-height: 1.2;
+
+  font-weight: 700;
+
+  letter-spacing: -0.03em;
+}
+
+.profile-page-description {
+  margin-top: 7px;
+
+  color: var(--muted-foreground);
+
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   MAIN PROFILE CARD
+========================================================= */
+
+.profile-main-card {
+  position: relative;
+
+  overflow: hidden;
+
+  border: 1px solid var(--border) !important;
+  border-radius: 22px !important;
+
+  background: var(--card) !important;
+
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.03),
+    0 10px 30px rgba(0, 0, 0, 0.05) !important;
+}
+
+
+/* =========================================================
+   SUBTLE TOP GLOW
+========================================================= */
+
+.profile-main-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: -100px;
+  right: -100px;
+
+  width: 260px;
+  height: 260px;
+
+  border-radius: 50%;
+
+  background: color-mix(
+    in srgb,
+    var(--primary) 7%,
+    transparent
+  );
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   CARD HEADER
+========================================================= */
+
+.profile-card-header {
+  position: relative;
+  z-index: 1;
+
+  padding: 28px 32px 20px !important;
+}
+
+.profile-card-title {
+  color: var(--foreground);
+
+  font-size: 1.15rem;
+
+  font-weight: 700;
+}
+
+.profile-card-subtitle {
+  margin-top: 5px;
+
+  color: var(--muted-foreground);
+
+  font-size: 0.85rem;
+}
+
+
+/* =========================================================
+   CARD CONTENT
+========================================================= */
+
+.profile-card-content {
+  position: relative;
+  z-index: 1;
+
+  padding: 10px 32px 32px !important;
+}
+
+
+/* =========================================================
+   USER SECTION
+========================================================= */
+
+.profile-user-section {
+  display: flex;
+
+  align-items: center;
+
+  gap: 22px;
+
+  padding: 20px 0 26px;
+}
+
+
+/* =========================================================
+   AVATAR
+========================================================= */
+
+.profile-avatar-wrapper {
+  position: relative;
+
+  flex-shrink: 0;
+
+  padding: 3px;
+
+  border-radius: 50%;
+
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    color-mix(
+      in srgb,
+      var(--primary) 45%,
+      #ffffff
+    )
+  );
+}
+
+.profile-avatar {
+  width: 88px !important;
+  height: 88px !important;
+
+  border: 3px solid var(--card);
+
+  background: var(--muted);
+}
+
+.profile-avatar img {
+  object-fit: cover;
+}
+
+.profile-avatar-fallback {
+  background: color-mix(
+    in srgb,
+    var(--primary) 12%,
+    var(--muted)
+  );
+
+  color: var(--primary);
+
+  font-size: 1.5rem;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   USER INFORMATION
+========================================================= */
+
+.profile-user-info {
+  min-width: 0;
+}
+
+.profile-user-name {
+  margin: 0;
+
+  color: var(--foreground);
+
+  font-size: 1.65rem;
+  line-height: 1.2;
+
+  font-weight: 700;
+
+  letter-spacing: -0.025em;
+}
+
+.profile-user-role {
+  margin-top: 6px;
+
+  color: var(--muted-foreground);
+
+  font-size: 0.9rem;
+}
+
+.profile-user-email {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  margin-top: 12px;
+
+  color: var(--muted-foreground);
+
+  font-size: 0.82rem;
+}
+
+.profile-user-email svg {
+  width: 15px;
+  height: 15px;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   DIVIDER
+========================================================= */
+
+.profile-divider {
+  width: 100%;
+  height: 1px;
+
+  background: var(--border);
+
+  margin-bottom: 24px;
+}
+
+
+/* =========================================================
+   INFORMATION GRID
+========================================================= */
+
+.profile-info-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 16px;
+}
+
+
+/* =========================================================
+   INFORMATION CARD
+========================================================= */
+
+.profile-info-card {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  min-height: 92px;
+
+  padding: 18px;
+
+  border: 1px solid var(--border);
+
+  border-radius: 15px;
+
+  background: var(--background);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.profile-info-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 22px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================================================
+   INFO ICON
+========================================================= */
+
+.profile-info-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  border-radius: 12px;
+}
+
+.profile-info-icon svg {
+  width: 19px;
+  height: 19px;
+}
+
+
+/* =========================================================
+   INFO CONTENT
+========================================================= */
+
+.profile-info-content {
+  min-width: 0;
+}
+
+.profile-info-label {
+  margin: 0;
+
+  color: var(--muted-foreground);
+
+  font-size: 0.76rem;
+
+  font-weight: 600;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.04em;
+}
+
+.profile-info-value {
+  margin: 5px 0 0;
+
+  color: var(--foreground);
+
+  font-size: 0.92rem;
+
+  font-weight: 600;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   BLUE
+========================================================= */
+
+.profile-info-blue .profile-info-icon {
+  background: color-mix(
+    in srgb,
+    #3b82f6 11%,
+    transparent
+  );
+
+  color: #3b82f6;
+}
+
+.profile-info-blue:hover {
+  border-color: color-mix(
+    in srgb,
+    #3b82f6 25%,
+    var(--border)
+  );
+}
+
+
+/* =========================================================
+   PURPLE
+========================================================= */
+
+.profile-info-purple .profile-info-icon {
+  background: color-mix(
+    in srgb,
+    #8b5cf6 11%,
+    transparent
+  );
+
+  color: #8b5cf6;
+}
+
+.profile-info-purple:hover {
+  border-color: color-mix(
+    in srgb,
+    #8b5cf6 25%,
+    var(--border)
+  );
+}
+
+
+/* =========================================================
+   ORANGE
+========================================================= */
+
+.profile-info-orange .profile-info-icon {
+  background: color-mix(
+    in srgb,
+    #f59e0b 12%,
+    transparent
+  );
+
+  color: #d97706;
+}
+
+.profile-info-orange:hover {
+  border-color: color-mix(
+    in srgb,
+    #f59e0b 25%,
+    var(--border)
+  );
+}
+
+
+/* =========================================================
+   GREEN
+========================================================= */
+
+.profile-info-green .profile-info-icon {
+  background: color-mix(
+    in srgb,
+    #22c55e 12%,
+    transparent
+  );
+
+  color: #16a34a;
+}
+
+.profile-info-green:hover {
+  border-color: color-mix(
+    in srgb,
+    #22c55e 25%,
+    var(--border)
+  );
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.profile-error {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 250px;
+
+  padding: 40px;
+
+  color: var(--muted-foreground);
+
+  font-size: 0.95rem;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 768px) {
+  .profile-card-header {
+    padding: 24px 22px 16px !important;
+  }
+
+  .profile-card-content {
+    padding: 8px 22px 24px !important;
+  }
+
+  .profile-user-section {
+    gap: 16px;
+  }
+
+  .profile-avatar {
+    width: 72px !important;
+    height: 72px !important;
+  }
+
+  .profile-user-name {
+    font-size: 1.35rem;
+  }
+
+  .profile-info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+@media (max-width: 520px) {
+  .profile-page-title {
+    font-size: 1.65rem;
+  }
+
+  .profile-page-description {
+    font-size: 0.85rem;
+  }
+
+  .profile-header-icon {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 11px;
+  }
+
+  .profile-user-section {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .profile-avatar {
+    width: 76px !important;
+    height: 76px !important;
+  }
+
+  .profile-user-name {
+    font-size: 1.3rem;
+  }
+
+  .profile-info-card {
+    min-height: 84px;
+
+    padding: 15px;
+  }
+
+  .profile-info-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .profile-info-value {
+    max-width: 220px;
+  }
+}

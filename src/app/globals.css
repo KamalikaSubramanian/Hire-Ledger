@@ -1,26 +1,335 @@
 @import "tailwindcss";
+@import "../styles/homepage.css";
+@import "../styles/dashboard.css";
+@import "../styles/navbar.css";
+@import "../styles/sidebar.css";
+@import "../styles/analysis.css";
+@import "../styles/improvedResume.css";
+@import "../styles/analysisHistory.css";
+@import "../styles/resumeHistory.css";
+@import "../styles/pdfViewer.css";
+@import "../styles/skills.css";
+@import "../styles/profile.css";
+
+/* =========================================================
+   HIRE LEDGER — GLOBAL THEME
+========================================================= */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #dce8f5;
+  --foreground: #25324a;
+
+  --card: #f8f9fc;
+  --card-foreground: #25324a;
+
+  --primary: #6875d8;
+  --primary-foreground: #ffffff;
+
+  --secondary: #eadff2;
+  --secondary-foreground: #4f4660;
+
+  --muted: #e8edf5;
+  --muted-foreground: #64718a;
+
+  --border: #cbd5e3;
+
+  --ring: #7c86df;
+
+  --radius: 0.85rem;
+
+  /* Application colors */
+  --app-blue: #c7d9ed;
+  --app-blue-deep: #b8cee7;
+
+  --app-pink: #e7cbd8;
+  --app-pink-deep: #ddb9cb;
+
+  --app-purple: #d8cce5;
+
+  /* Text */
+  --text-main: #25324a;
+  --text-heading: #293653;
+  --text-soft: #64718a;
+  --text-subtle: #7a879d;
+
+  /* Shadows */
+  --shadow-soft:
+    0 8px 30px rgba(67, 82, 115, 0.1);
+
+  --shadow-hover:
+    0 18px 45px rgba(67, 82, 115, 0.16);
+
+  --shadow-panel:
+    0 12px 35px rgba(67, 82, 115, 0.11);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* =========================================================
+   BASE
+========================================================= */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  width: 100%;
+  min-height: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+  background:
+    radial-gradient(
+      circle at 10% 15%,
+      rgba(183, 210, 238, 0.72),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 90% 20%,
+      rgba(226, 187, 208, 0.68),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 50% 90%,
+      rgba(210, 198, 228, 0.55),
+      transparent 38%
+    ),
+    linear-gradient(
+      135deg,
+      #cbdced 0%,
+      #e1d5e5 48%,
+      #e5ccd8 100%
+    );
+
+  background-attachment: fixed;
+
+  overflow-x: hidden;
+}
+
+/* =========================================================
+   GLOBAL TEXT
+========================================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text-heading);
+}
+
+p {
+  color: var(--text-soft);
+}
+
+/* =========================================================
+   GLOBAL CARD
+========================================================= */
+
+.app-card {
+  border: 1px solid rgba(255, 255, 255, 0.55);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.78),
+      rgba(246, 247, 251, 0.7)
+    );
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  border-radius: var(--radius);
+
+  box-shadow: var(--shadow-soft);
+
+  transition:
+    transform 300ms ease,
+    box-shadow 300ms ease,
+    border-color 300ms ease;
+}
+
+.app-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow: var(--shadow-hover);
+
+  border-color: rgba(104, 117, 216, 0.28);
+}
+
+/* =========================================================
+   GLOBAL BUTTON ANIMATION
+========================================================= */
+
+button {
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease,
+    background-color 200ms ease;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes pulseSoft {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 700ms ease both;
+}
+
+.animate-fade-in {
+  animation: fadeIn 700ms ease both;
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+.animate-pulse-soft {
+  animation: pulseSoft 5s ease-in-out infinite;
+}
+
+/* =========================================================
+   STAGGERED CHILD ANIMATION
+========================================================= */
+
+.stagger-children > * {
+  opacity: 0;
+  animation: fadeUp 650ms ease forwards;
+}
+
+.stagger-children > *:nth-child(1) {
+  animation-delay: 100ms;
+}
+
+.stagger-children > *:nth-child(2) {
+  animation-delay: 180ms;
+}
+
+.stagger-children > *:nth-child(3) {
+  animation-delay: 260ms;
+}
+
+.stagger-children > *:nth-child(4) {
+  animation-delay: 340ms;
+}
+
+.stagger-children > *:nth-child(5) {
+  animation-delay: 420ms;
+}
+
+.stagger-children > *:nth-child(6) {
+  animation-delay: 500ms;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+  body {
+    background:
+      radial-gradient(
+        circle at 0% 10%,
+        rgba(183, 210, 238, 0.75),
+        transparent 38%
+      ),
+      radial-gradient(
+        circle at 100% 30%,
+        rgba(226, 187, 208, 0.72),
+        transparent 40%
+      ),
+      linear-gradient(
+        145deg,
+        #cbdced,
+        #e0d4e4,
+        #e5ccd8
+      );
+  }
+
+  .app-card {
+    border-radius: 0.75rem;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }

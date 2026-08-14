@@ -1,0 +1,3168 @@
+-------------*************-------------*************-------REDUX ------*************-------------*************
+
+
+
+Component
+      │
+      ▼
+dispatch(action)
+      │
+      ▼
+Reducer
+      │
+      ▼
+Store updates
+      │
+      ▼
+React re-renders components using that state
+
+
+
+| Zustand                    | Redux Toolkit                        |
+| -------------------------- | ------------------------------------ |
+| `create()`                 | `createSlice()` + `configureStore()` |
+| Store and actions together | Slice + Store are separate           |
+| `useStore()`               | `useSelector()`                      |
+| `set()`                    | `dispatch()`                         |
+| Actions inside `create()`  | Reducers inside `createSlice()`      |
+| Very little boilerplate    | Slightly more structure              |
+
+
+-------------*************-------------*************-------NAVIGATION------*************-------------*************
+
+Why store navigation in an array instead of hardcoding links?
+
+
+"It follows the DRY (Don't Repeat Yourself) principle. The sidebar is data-driven, making it easy to add, remove, or modify navigation items without changing the rendering logic."
+
+Why create a separate SidebarItem component?
+
+"It improves reusability, readability, and maintainability. Each navigation item has a single responsibility, making the sidebar easier to extend and test."
+
+-------------*************-------------*************-------SHAD CN------*************-------------*************
+
+shadcn/ui is a collection of reusable UI components that are copied directly into your project instead of being installed as a component library.
+
+Think of it like this:
+
+Material UI → You import components from the package.
+Chakra UI → You import components from the package.
+shadcn/ui → You generate/copy the component's source code into your own project.
+
+Instead of
+node_modules/
+    material-ui/
+        Button
+        Card
+        Dialog
+import { Button } from "@chakra-ui/react";
+
+components/
+    ui/
+        button.tsx
+        input.tsx
+        dialog.tsx
+        card.tsx
+import { Button } from "@/components/ui/button";
+Notice that it imports from your own project, not from node_modules.
+
+
+-------------*************-------------*************-------LUCIDE REACT------*************-------------*************
+
+lucide-react is a React icon library that provides beautiful, customizable SVG icons.
+
+For example:
+
+Search 🔍
+Home 🏠
+User 👤
+Settings ⚙️
+Shopping Cart 🛒
+Trash 🗑️
+Menu ☰
+
+Instead of downloading icon images, you import them as React components.
+
+Button comes from shadcn/ui.
+Search comes from lucide-react.
+Tailwind classes (mr-2 h-4 w-4) control the icon's spacing and size.
+
+This combination is a very common pattern in modern Next.js applications.
+
+
+-------------*************-------------*************-------REACHARTS------*************-------------*************
+
+What is Recharts?
+
+Recharts is a React library used to create charts and graphs.
+
+if you wanted to draw a graph, you would have to manually use SVG or Canvas and calculate:
+
+Coordinates
+Axes
+Grid lines
+Labels
+Mouse hover effects
+Animations
+
+That would take hundreds of lines of code.
+
+Recharts does all of that for you.
+
+1. ResponsiveContainer
+<ResponsiveContainer>
+
+Imagine you resize your browser.
+
+Without it:
+Chart - 500px wide - Always
+
+Even if the screen becomes smaller.
+The chart overflows.
+
+With ResponsiveContainer:
+Screen shrinks
+
+↓
+
+Chart also shrinks
+
+↓
+
+Always fits
+
+It automatically makes charts responsive.
+
+2. LineChart
+<LineChart>
+
+This is the parent component.
+Think of it as the canvas.
+Without LineChart
+There is nowhere to draw.
+
+3. Line
+<Line />
+
+This is the actual graph.
+Without Line
+You'll only see axes.
+
+attributes:
+1. datakey - The data that you provide via the data prop is an array of objects. Each object can have multiple properties, each representing a different data dimension. Use the dataKey prop to specify which property (or dimension) to use for this component.
+
+Typically, you will want to have one dataKey on the X axis, and different dataKey on the Y axis, where they extract different values from the same data objects.
+
+Decides how to extract the value from the data:
+
+string: the name of the field in the data object;
+number: the index of the field in the data;
+function: a function that receives the data object and returns the value.
+
+Draw graph using
+
+applications values
+
+↓
+
+2
+5
+7
+10
+14
+24
+
+2. type
+The type prop tells Recharts how to connect the data points.
+
+<Line type="linear" /> - It connects points with straight lines.
+
+<Line type="monotone" /> - It creates a smooth curve through the points.
+
+
+3. strokeWidth = {3}
+stroke refers to the line itself.
+strokeWidth controls how thick the line is.
+
+| Property                 | Meaning                                                                                    |
+| ------------------------ | ------------------------------------------------------------------------------------------ |
+| `type="monotone"`        | Draws a smooth curve without overshooting the data points.                                 |
+| `dataKey="applications"` | Uses the `applications` property from each object in the data array for the Y-axis values. |
+| `strokeWidth={3}`        | Makes the line 3 pixels thick.                                                             |
+
+4. XAxis
+<XAxis dataKey="month" />
+
+XAxis means
+
+Horizontal axis.
+
+Jan Feb Mar Apr
+
+It reads month from your objects.
+
+{
+month:"Jan"
+}
+
+↓
+
+Shows
+Jan
+
+
+5. YAxis
+<YAxis />
+
+Vertical axis.
+
+20
+15
+10
+5
+0
+
+It automatically calculates values.
+
+6. Tooltip
+<Tooltip />
+
+Imagine moving your mouse over the graph.
+
+Without Tooltip
+Nothing happens.
+
+With Tooltip
+
+●
+Applications
+24
+
+A small popup appears.
+Almost every dashboard has this.
+
+
+7. CartesianGrid
+<CartesianGrid />
+
+Those faint background lines.
+<CartesianGrid strokeDasharray="3 2" />
+
+strokeDasharray="3 3"
+Let's split the name:
+
+stroke → the line being drawn.
+dash → dashed instead of solid.
+array → the repeating pattern.
+
+The value "3 3" means:
+
+Draw 3 pixels
+Skip 3 pixels
+Repeat
+
+| Property                | Meaning                                                                                      |
+| ----------------------- | -------------------------------------------------------------------------------------------- |
+| `CartesianGrid`         | Draws the background grid lines on the chart.                                                |
+| `strokeDasharray="3 3"` | Creates dashed grid lines using a repeating pattern of **3 pixels drawn, 3 pixels skipped**. |
+
+
+-------------*************-------------*************-------SHEET------*************-------------*************
+
+Why use Sheet instead of creating our own drawer?
+Because Sheet already includes:
+
+Keyboard accessibility
+Focus trapping
+Animation
+Screen reader support
+Overlay
+ESC key handling
+
+This saves development time and improves accessibility.
+
+
+-------------*************-------------*************-----MONGO DB------*************-------------*************
+
+
+whenever a new user signs in to your application:
+
+User
+↓
+Clerk Authentication
+↓
+Next.js
+↓
+MongoDB
+↓
+User Document Created
+
+PROCESS: 
+Imports the Mongoose library so we can connect to MongoDB and work with databases, collections, schemas, and models.
+
+Reads the MongoDB connection string from the .env.local file and stores it in the MONGODB_URI variable.
+
+Checks whether the MongoDB connection string exists. If it doesn't, execute the code inside this block.
+
+Stops the application immediately and shows an error message because the database URL is missing.
+
+Extends Node.js's global object by adding a custom property (mongooseConnection) that TypeScript will recognize.
+
+Defines a global variable named mongooseConnection that stores:
+
+the active MongoDB connection (conn),
+the connection promise (promise),
+or undefined if it hasn't been created yet.
+
+
+If a cached MongoDB connection already exists globally, use it. Otherwise, create a new cache object.
+
+Initially, there is no active database connection.
+Initially, there is no connection request in progress.
+
+global.mongooseConnection = cached;
+Stores the cache object globally so every API route and server component can reuse the same MongoDB connection.
+
+Creates and exports an asynchronous function called connectDB() that connects the application to MongoDB.
+
+Checks whether a MongoDB connection already exists.
+
+If already connected, return the existing connection instead of creating a new one.
+
+Checks whether a connection attempt is already in progress. If not, start one.
+
+Starts connecting to MongoDB and stores the connection promise in the cache.Specifies that the application should use the hire_ledger database inside the MongoDB cluster.
+
+Waits for the database connection to complete, then stores the successful connection in the cache.
+
+Returns the connected MongoDB instance so other files can use the database.
+
+***---***---
+!
+This is called
+Non-null Assertion Operator
+
+TypeScript thinks
+
+process.env.MONGODB_URI
+might be
+string | undefined
+because the environment variable might be missing.
+
+The ! tells TypeScript:
+"Trust me, this value exists."
+
+Without it:
+Type 'undefined' is not assignable to string.
+
+***---
+??  is called the Nullish Coalescing Operator in JavaScript/TypeScript.
+
+Meaning
+It means:
+"If the value on the left is NOT null or undefined, use it. Otherwise, use the value on the right."
+
+Syntax
+value1 ?? value2
+
+It works like:
+If value1 is NOT null or undefined
+    return value1
+Else
+    return value2
+
+***---
+
+First request:
+Dashboard
+↓
+connectDB()
+↓
+No Connection
+↓
+MongoDB Atlas
+↓
+Connected
+↓
+Cached
+
+(OR)
+
+Application Starts
+        │
+        ▼
+Read MONGODB_URI from .env.local
+        │
+        ▼
+Is MONGODB_URI available?
+        │
+      Yes
+        │
+        ▼
+global.mongooseConnection
+        │
+        ▼
+undefined (No cached connection)
+        │
+        ▼
+const cached = {
+    conn: null,
+    promise: null
+}
+        │
+        ▼
+Store cached object in global
+(global.mongooseConnection = cached)
+        │
+        ▼
+Call connectDB()
+        │
+        ▼
+cached.conn exists?
+        │
+      No (null)
+        │
+        ▼
+cached.promise exists?
+        │
+      No (null)
+        │
+        ▼
+Start MongoDB Connection
+cached.promise = mongoose.connect(...)
+        │
+        ▼
+Promise Status
+(Pending)
+        │
+        ▼
+await cached.promise
+        │
+        ▼
+MongoDB Connected Successfully
+        │
+        ▼
+cached.conn = mongoose
+        │
+        ▼
+global.mongooseConnection =
+{
+   conn: mongoose,
+   promise: Promise(Fulfilled)
+}
+        │
+        ▼
+Return cached.conn
+        │
+        ▼
+Database Ready
+
+
+***---
+
+Second request:
+Dashboard
+↓
+connectDB()
+↓
+Already Connected
+↓
+Reuse Connection
+
+
+(OR)
+
+Second Request Starts
+        │
+        ▼
+Read MONGODB_URI
+        │
+        ▼
+global.mongooseConnection
+        │
+        ▼
+{
+   conn: mongoose,
+   promise: Promise(Fulfilled)
+}
+        │
+        ▼
+const cached = global.mongooseConnection
+        │
+        ▼
+cached.conn exists?
+        │
+      Yes
+        │
+        ▼
+Return cached.conn
+        │
+        ▼
+Database Ready
+
+| First Request                           | Second Request                                              |
+| --------------------------------------- | ----------------------------------------------------------- |
+| `global.mongooseConnection = undefined` | `global.mongooseConnection` already contains the connection |
+| Creates new cache object                | Reuses existing cache object                                |
+| `conn = null`                           | `conn = mongoose`                                           |
+| `promise = null`                        | `promise = Promise(Fulfilled)`                              |
+| Calls `mongoose.connect()`              | Does **not** call `mongoose.connect()`                      |
+| Waits for database connection           | Returns immediately                                         |
+| Stores connection globally              | Reuses stored connection                                    |
+| Slower (first-time connection)          | Faster (cached connection)                                  |
+
+
+Final State After the First Successful Connection:
+global
+└── mongooseConnection
+      ├── conn = mongoose (Connected)
+      └── promise = Promise(Fulfilled)
+
+
+Flow:
+
+Server Starts
+      │
+      ▼
+Memory is Empty
+      │
+      ▼
+global.mongooseConnection = undefined
+      │
+      ▼
+First Request
+      │
+      ▼
+Create New MongoDB Connection
+      │
+      ▼
+Store Connection in global.mongooseConnection
+During normal server execution (no restart)
+
+If the server does not restart, then every request reuses the same connection.
+
+Server Running
+      │
+      ▼
+Request 1
+      │
+      ▼
+Create MongoDB Connection
+      │
+      ▼
+Store in global.mongooseConnection
+      │
+      ▼
+Request 2
+      │
+      ▼
+Reuse Existing Connection
+      │
+      ▼
+Request 3
+      │
+      ▼
+Reuse Existing Connection
+      │
+      ▼
+Request 4
+      │
+      ▼
+Reuse Existing Connection
+
+
+Why do we use caching then?
+The main reason is not to survive server restarts.
+
+It's to avoid creating multiple connections while the server is already running.
+
+In Next.js development mode:
+
+Every time you save a file, Fast Refresh/Hot Reload can reload modules.
+Without caching, mongoose.connect() might be called repeatedly.
+This can lead to many unnecessary MongoDB connections and errors like:
+"Too many connections"
+"Cannot overwrite model once compiled"
+
+Using global.mongooseConnection ensures that the running server reuses the existing connection.
+
+
+
+-------------*************-------------*************-------WEBHOOK------*************-------------*************
+
+The Production Solution
+
+Instead of asking:
+"Does this user exist?"
+
+on every request, we let Clerk notify us only when something changes.
+
+That's called a Webhook.
+
+What is a Webhook?
+
+A webhook is simply:
+One server automatically sending information to another server when an event occurs.
+
+Architecture::
+Instead of:
+
+Browser
+↓
+Protected Layout
+↓
+syncUser()
+
+We'll have:
+
+Clerk
+↓
+Webhook
+↓
+API Route
+↓
+MongoDB
+
+What is a webhook?
+A webhook is an HTTP callback where one system automatically sends data to another system when a specific event occurs. It enables event-driven communication without requiring repeated polling.
+
+
+Why use webhooks instead of checking on every request?
+Webhooks are more efficient because they only trigger when relevant events occur, reducing unnecessary database queries and improving application performance and scalability.
+
+
+-------------*************-------------*************-------SVIX------*************-------------*************
+Why does Clerk use Svix?
+Svix signs webhook requests so the receiving server can verify that the request genuinely came from Clerk and has not been tampered with.
+
+
+What is Svix?
+When someone sends a request to your webhook, how do you know it's really from Clerk?
+
+Without verification:
+
+Anyone
+↓
+POST /api/webhooks/clerk
+↓
+Fake User
+
+Dangerous.
+
+Svix adds a signature:
+
+Clerk
+↓
+Signed Request
+↓
+Your Server
+↓
+Verify Signature
+↓
+Safe
+
+
+
+
+
+              User
+                  │
+                  ▼
+              Clerk Auth
+                  │
+                  ▼
+        ┌──────────────────┐
+        │ Clerk Event       │
+        │ user.created      │
+        │ user.updated      │
+        │ user.deleted      │
+        └──────────────────┘
+                  │
+                  ▼
+           HTTPS POST Request
+                  │
+                  ▼
+  /api/webhooks/clerk/route.ts
+                  │
+                  ▼
+          Verify Signature
+                  │
+                  ▼
+          Parse Event Type
+                  │
+        ┌─────────┼─────────┐
+        ▼         ▼         ▼
+   Create User  Update User Delete User
+        │         │         │
+        └─────────┴─────────┘
+                  │
+                  ▼
+               MongoDB
+
+Imports the Webhook class from the Svix package.
+
+Why?
+Clerk sends webhooks using Svix.
+
+We use this class to verify that the webhook really came from Clerk.
+Without verification, anyone could send fake requests.
+
+
+const payload = await req.text();
+Meaning
+
+Reads the complete request body as text.
+Suppose Clerk sends:
+
+{
+ "type":"user.created",
+ "data":{
+   "id":"user123"
+ }
+}
+
+Then payload contains
+
+{
+ "type":"user.created",
+ "data":{
+   "id":"user123"
+ }
+}
+
+as raw text.
+
+Why.text() instead of .json() ?
+
+Because Svix verification needs the original raw request body.
+
+
+const wh = new Webhook(WEBHOOK_SECRET);
+means
+"Create a new Webhook object."
+
+
+Why pass WEBHOOK_SECRET?
+
+That is the secret shared between:
+Clerk
+↓
+Your Server
+
+const wh = new Webhook(WEBHOOK_SECRET);
+Meaning
+Creates a new Svix Webhook verifier.
+It knows the secret key.
+Later it will verify whether the request really came from Clerk.
+
+The Webhook object stores this secret internally.
+
+Imagine it like this:
+const wh = {
+    secret: "whsec_xxxxxxxxx",
+    verify() { ... }
+}
+
+Now whenever you call
+
+wh.verify(...)
+
+it already knows the secret to use.
+
+
+What is evt?
+It's just a variable name.
+
+It stands for:
+Event
+
+evt = wh.verify(payload, headers);
+
+evt contains the entire webhook event sent by Clerk.
+evt = {
+  type: "user.created",
+  data: {
+    id: "user_123",
+
+    first_name: "Kamalika",
+
+    last_name: "Subramanian",
+
+    image_url: "...",
+
+    email_addresses: [
+      {
+        email_address: "kamalika@gmail.com"
+      }
+    ]
+  }
+}
+
+const { type, data } = evt;
+
+which is shorthand for:
+
+const type = evt.type;
+const data = evt.data;
+
+
+
+
+Complete Flow:
+User
+   │
+   ▼
+Clerk Sign Up Page
+   │
+   ▼
+User enters
+• Name
+• Email
+• Password
+(or Google Login)
+   │
+   ▼
+Clicks "Sign Up"
+   │
+   ▼
+Clerk Server
+   │
+   ▼
+Creates User
+inside Clerk Database
+   │
+   ▼
+User Successfully Created
+   │
+   ▼
+Clerk prepares a webhook event
+(type = "user.created")
+   │
+   ▼
+Clerk uses Svix (webhook infrastructure) internally
+   │
+   ├── Generates svix-id
+   ├── Generates svix-timestamp
+   ├── Generates cryptographic signature
+   └── Creates svix-signature
+   │
+   ▼
+Clerk sends HTTP POST request
+to your Next.js webhook endpoint
+
+POST /api/webhooks/clerk
+
+Headers
+--------
+svix-id
+svix-timestamp
+svix-signature
+
+Body
+--------
+{
+  "type": "user.created",
+  "data": {
+    "id": "user_123",
+    "email_addresses": [
+      {
+        "email_address": "kamal@gmail.com"
+      }
+    ],
+    "first_name": "Kamal",
+    "last_name": "Subramanian"
+  }
+}
+   │
+   ▼
+Your Next.js API Route
+(api/webhooks/clerk)
+receives
+
+• Raw Payload
+• Svix Headers
+   │
+   ▼
+svix npm package verifies
+the webhook
+
+wh.verify(payload, headers)
+   │
+   ▼
+It uses CLERK_WEBHOOK_SECRET to calculate the expected signature
+   │
+   ▼
+Compares
+
+Generated Signature
+        VS
+Incoming svix-signature
+   │
+   ▼
+Signature Valid?
+   │
+   ├────────── No
+   │            │
+   │            ▼
+   │     Return 400
+   │
+   ▼
+Yes
+   │
+   ▼
+Webhook is genuine
+(It really came from Clerk)
+   │
+   ▼
+Extract Event
+
+type = "user.created"
+
+data = {
+   id,
+   email,
+   first_name,
+   last_name,
+   image_url
+}
+   │
+   ▼
+switch(type)
+   │
+   ▼
+case "user.created"
+   │
+   ▼
+createUser()
+   │
+   ▼
+Connect to MongoDB
+(if not already connected)
+   │
+   ▼
+Insert User into
+Users Collection
+   │
+   ▼
+MongoDB User Created
+   │
+   ▼
+Return
+
+{
+   "success": true
+}
+
+//Svix is the webhook platform that Clerk uses internally. That's why the verification library comes from the svix package.
+
+-------------*************-------------*************-------APPLICATION MODEL ------*************-------------*************
+
+export default model("Application", ApplicationSchema);
+During development, Next.js reloads files frequently.
+
+You'll eventually get:
+OverwriteModelError:
+Cannot overwrite `Application` model once compiled.
+
+This pattern prevents that:
+const Application =
+  models.Application ||
+  model("Application", ApplicationSchema);
+
+
+
+| Field            | Purpose                                         |
+| ---------------- | ----------------------------------------------- |
+| `userId`         | Connects the application to the logged-in user. |
+| `company`        | Company name (e.g., Google, Zoho).              |
+| `jobTitle`       | Position applied for.                           |
+| `location`       | Job location.                                   |
+| `status`         | Tracks the application's progress.              |
+| `jobDescription` | Used later for AI resume analysis.              |
+| `appliedDate`    | Records when the application was submitted.     |
+| `resumeId`       | Links the specific resume used.                 |
+| `matchScore`     | AI-generated compatibility score (0–100).       |
+| `missingSkills`  | Skills identified by AI as missing.             |
+
+
+
+
+-------------*************-------------*************-------APPLICATION MODEL ------*************-------------*************
+
+1. userId - Every uploaded resume belongs to one user.
+
+2. name - Google_Resume.pdf , This is simply the display name shown in the UI.
+
+3. fileUrl - https://...
+Later this will store the Cloudinary URL.
+
+4. extractedTexT -  When the user uploads a PDF, we'll parse it.Instead of reading the PDF every time, we save the extracted text once.
+
+5. version - Suppose a user updates their resume Instead of replacing it, we keep versions.
+
+
+Example:
+https://res.cloudinary.com/...
+
+Q1. Why store extractedText?
+Parsing a PDF is relatively expensive. By extracting the text once during upload and storing it, the application can perform AI analysis much faster without repeatedly reading the PDF.
+
+Q2. Why use fileUrl instead of storing the PDF in MongoDB?
+Large files are better stored in object storage services like Cloudinary. MongoDB stores only the metadata and URL, making the database smaller and improving performance.
+
+Q3. Why keep multiple resume versions?
+Users often tailor resumes for different roles. Versioning allows them to retain previous resumes and choose the appropriate one for each job application.
+
+
+-------------*************-------------*************-------SKILLS MODEL ------*************-------------*************
+
+1. userId - Every skill belongs to one user.
+
+2. name - Examples : React ,Node.js
+
+3. proficiency
+Example :
+React 90
+MongoDB 70
+
+Later we can display
+
+█████████░ 90%
+
+███████░░░ 70%
+
+██░░░░░░░░ 20%
+
+4. source
+
+How was this skill added?
+Possible values:
+
+Resume
+Automatically extracted from the uploaded resume.
+
+AI
+AI suggested this skill.
+
+Manual
+User manually added it.
+
+
+Why not store Missing Skills here?
+
+A common question is:
+Why don't we store missingSkills in the Skill collection instead of Application?
+
+We intentionally keep them in the Application model because missing skills are specific to a job description.
+
+For example:
+
+Application A:
+
+Missing
+AWS
+Docker
+
+Application B:
+
+Missing
+Kubernetes
+Redis
+
+If we stored missing skills globally, we'd lose the context of which job they were missing for.
+
+Instead:
+
+Application.missingSkills → Missing for that specific application.
+Skill → User's known skills and profile.
+
+This separation keeps the data meaningful and easier to analyze.
+
+Q1. Why separate Skill from Application?
+Application stores job-specific information, while Skill stores user-specific information. Separating them avoids duplication, makes analytics easier, and follows normalization principles.
+
+Q3. Why store proficiency as a number?
+A numeric scale is flexible. It can be displayed as percentages, progress bars, or mapped to labels like Beginner, Intermediate, and Advanced.
+
+-------------*************-------------*************-------AI ANALYSIS MODEL ------*************-------------*************
+
+Resume
+      +
+Job Description
+      ↓
+Gemini AI
+      ↓
+Match Score
+Missing Skills
+Suggestions
+      ↓
+MongoDB
+
+
+
+User
+ │
+ ▼
+Resume
+ │
+ ▼
+Application
+ │
+ ▼
+AI Analysis
+
+Every analysis belongs to:
+One User
+One Resume
+One Application
+
+| Field         | Purpose                        |
+| ------------- | ------------------------------ |
+| userId        | Owner                          |
+| applicationId | Which application              |
+| resumeId      | Which resume                   |
+| matchScore    | AI score                       |
+| missingSkills | Skills to learn                |
+| suggestions   | Resume improvement suggestions |
+
+
+Why have an Analysis model if Application already has matchScore and missingSkills?
+
+That's a great architectural question.
+
+Think of the roles:
+
+Application:
+Stores the latest summary shown on the dashboard.
+
+Google
+↓
+Match Score
+84%
+
+Missing Skills
+Docker
+AWS
+
+
+Analysis:
+Stores the full AI analysis.
+
+Resume
+↓
+Gemini
+↓
+Match Score
+↓
+Missing Skills
+↓
+Suggestions
+
+This separation lets you:
+Re-run analysis later.
+Keep a history if you choose to.
+Store richer AI outputs without bloating the Application document.
+
+Q1. Why create a separate Analysis collection?
+It separates AI-generated data from the core application record. This keeps the application model lightweight while allowing AI results to evolve independently.
+
+Q2. Why not call Gemini every time?
+AI API calls have cost and latency. Storing the analysis allows the application to display previous results instantly and reduces API usage.
+
+Q3. Why reference both resumeId and applicationId?
+An analysis is always based on a specific resume and a specific job application. Referencing both preserves that relationship and makes it easy to retrieve the correct analysis later.
+
+-------------*************-------------*************-------NOTIFICATION MODEL ------*************-------------*************
+
+userId - Every notification belongs to one user.
+
+1. title:
+Resume Uploaded
+AI Analysis Completed
+Interview Reminder
+
+This is the heading shown in the notification dropdown.
+
+2. message:
+Your resume was uploaded successfully.
+AI found 5 missing skills.
+Interview scheduled for tomorrow.
+
+3. type :
+We'll use this to show different icons and colors.
+
+Examples:
+
+ApplicatioN 💼
+Resume📄
+
+4. isRead
+
+Initially:
+false
+
+After the user opens it:
+true
+
+Later, we can display a badge such as:
+🔔 3
+representing three unread notifications.
+
+Future Flow:
+
+When a user uploads a resume:
+
+Upload Resume
+↓
+Save Resume
+↓
+Create Notification
+↓
+Show Bell Badge
+
+When AI analysis finishes:
+
+Gemini AI
+↓
+Save Analysis
+↓
+Create Notification
+↓
+"Analysis Completed"
+
+When an application is added:
+
+Application Saved
+↓
+Notification
+↓
+"Application Added Successfully"
+
+
+
+Q1. Why keep notifications in a separate collection?
+Notifications are user activity records, not part of the application or resume data. A separate collection keeps concerns separated, allows independent querying, and makes it easy to implement features like unread counts, pagination, and notification history.
+
+Q2. Why use isRead instead of deleting notifications?
+Users often want to revisit previous notifications. Marking them as read preserves history while still allowing the UI to distinguish new notifications.
+
+Q3. Why store a type?
+The type field allows the frontend to display different icons, colors, and filters for different kinds of notifications without relying on parsing the message text.
+
+
+-------------*************-------------*************-------application.actions.ts------*************-------------*************
+
+User submits form
+↓
+createApplication()
+↓
+connectDB()
+↓
+Application.create()
+↓
+MongoDB
+
+Q1. Why use Server Actions instead of accessing MongoDB in React components?
+Server Actions execute securely on the server, keeping database credentials and business logic away from the client. They also centralize data access and make the application easier to maintain.
+
+Q2. Why organize actions by model?
+Grouping actions by model follows the Single Responsibility Principle. It improves readability, simplifies maintenance, and makes it easier to locate related database operations.
+
+Q3. Why avoid any in action parameters?
+Using explicit TypeScript interfaces improves type safety, editor support, and reduces runtime errors by catching invalid data during development.
+
+Large companies don't simply write:
+Application.create(data)
+
+They first:
+
+✅ Validate the data
+✅ Verify ownership
+✅ Handle errors consistently
+✅ Revalidate the UI
+✅ Return typed responses
+
+Let's implement that.
+
+New Flow:
+
+Dashboard
+↓
+Validate Input
+↓
+Check User
+↓
+Connect DB
+↓
+MongoDB
+↓
+Revalidate Dashboard
+↓
+Return Typed responses
+
+src/types/action.ts:
+export interface ActionResponse<T> {
+  success: boolean;
+  data?: T;
+  message?: string;
+}
+Now every action returns the same structure.
+
+Example:
+Success:
+{
+   success:true,
+   data:application
+}
+
+Failure:
+{
+   success:false,
+   message:"Application not found"
+}
+Much cleaner.
+
+Why revalidatePath()?
+Suppose:
+
+Dashboard
+↓
+5 Applications
+↓
+Create One
+
+Without
+revalidatePath()
+Dashboard still shows
+5
+Until refresh.
+
+With
+revalidatePath("/dashboard")
+Dashboard updates automatically.
+
+
+Q2. Why use revalidatePath()?
+Next.js caches server-rendered data. revalidatePath() invalidates the cache for a route so that users immediately see updated information after a create, update, or delete operation.
+
+Q3. Why check both _id and userId?
+Checking both prevents unauthorized access to resources. Even if someone knows another document's ID, they cannot retrieve or modify it unless they are the owner.
+
+-------------*************-------------*************-------ZOD------*************-------------*************
+
+Zod validates incoming data before it reaches the database, ensuring only correctly structured and valid data is persisted. This reduces runtime errors and improves data integrity.
+
+import { z } from "zod";
+Meaning
+
+Imports the Zod library.
+
+z is the main object provided by Zod.
+It contains methods like:
+z.string()
+z.number()
+z.boolean()
+z.date()
+z.object()
+z.enum()
+
+Without this import, you cannot create validation schemas.
+
+
+export const ApplicationSchema = z.object({
+Meaning
+
+Creates a new Zod object schema and exports it.
+z.object() → Creates an object validator.
+
+-- company: z.string().min(2),
+Meaning
+The company field:
+must be a string
+must contain at least 2 characters
+
+-- jobTitle: z.string().min(2),
+Meaning
+The job title:
+must be a string
+minimum length = 2
+
+-- status: z.enum([
+Meaning:
+Creates an Enum.
+Instead of allowing any string,
+only specific values are allowed.
+
+-- resumeId: z.string().optional(),
+Meaning
+resumeId:
+if provided → must be a string
+if omitted → that's okay
+
+-- appliedDate: z.date().optional(),
+Meaning:
+If present,
+it must be a JavaScript Date object.
+
+
+-------------*************-------------*************-------APPLICATION FORM UI------*************-------------*************
+
+User
+↓
+Application Form
+↓
+React Hook Form
+↓
+Zod Validation
+↓
+Server Action
+↓
+MongoDB
+↓
+Dashboard
+
+export type ApplicationFormValues =
+  z.infer<typeof ApplicationSchema>;
+
+  z.infer
+
+This is the important part.
+
+Meaning
+
+"Infer" means "automatically determine the TypeScript type from a Zod schema."
+
+Instead of writing the type yourself,
+Zod creates it for you.
+
+
+typeof ApplicationSchema
+means
+"Give me the type of the ApplicationSchema object."
+
+z.infer<typeof ApplicationSchema>
+This tells Zod:
+"Look at this schema and generate the matching TypeScript type."
+
+
+From this schema:
+
+const ApplicationSchema = z.object({
+  company: z.string(),
+  jobTitle: z.string(),
+  location: z.string(),
+  status: z.enum([
+    "Applied",
+    "Interview",
+    "Rejected",
+    "Offer",
+    "Accepted",
+  ]),
+  jobDescription: z.string(),
+  resumeId: z.string().optional(),
+  appliedDate: z.date().optional(),
+});
+
+Zod automatically creates:
+
+type ApplicationFormValues = {
+  company: string;
+  jobTitle: string;
+  location: string;
+  status:
+    | "Applied"
+    | "Interview"
+    | "Rejected"
+    | "Offer"
+    | "Accepted";
+  jobDescription: string;
+  resumeId?: string;
+  appliedDate?: Date;
+};
+
+
+**************React Hook Form (useForm)
+
+useForm is a React Hook provided by the React Hook Form library.
+
+import { useForm } from "react-hook-form";
+
+Its purpose is to manage forms in React.
+
+Instead of manually handling:
+
+Form values
+Validation
+Errors
+Submission
+Resetting
+Default values
+
+useForm() manages all of these for you.
+
+Instead of writing:
+const [company, setCompany] = useState("");
+const [jobTitle, setJobTitle] = useState("");
+const [location, setLocation] = useState("");
+
+we simply use
+const form = useForm();
+it returns an object containing many useful methods.
+console.log(form);
+
+{
+  register,
+  handleSubmit,
+  control,
+  reset,
+  watch,
+  setValue,
+  getValues,
+  formState
+}
+
+These methods help you manage every part of the form.
+
+Most Common Methods
+1. register:
+Connects an input to the form.
+
+<input {...register("email")} />
+Meaning:
+"Track this input under the name email."
+
+
+2. handleSubmit:
+Handles form submission.
+
+<form onSubmit={handleSubmit(onSubmit)}>
+Instead of:
+<form onSubmit={onSubmit}>
+
+it:
+Prevents page refresh.
+Validates the form.
+Passes the form data to your function.
+
+3. control:
+
+Used with controlled components like:
+shadcn/ui
+Radix UI
+React Select
+Date Picker
+
+Example:
+<FormField
+  control={form.control}
+  name="company"
+/>
+
+4. formState:
+Contains information about the form.
+
+Example:
+
+form.formState.errors
+or
+form.formState.isSubmitting
+or
+form.formState.isValid
+
+5. reset():
+Resets the form.
+
+form.reset();
+All fields become empty (or return to their default values).
+
+6. watch():
+Watches the current value of a field.
+
+const company = form.watch("company");
+
+If the user types:
+Google
+
+then:
+company
+
+becomes
+"Google"
+
+7. setValue()
+
+Programmatically updates a field.
+form.setValue("company", "Google");
+
+8. getValues()
+
+Gets the current values.
+const values = form.getValues();
+Returns:
+{
+  company: "Google",
+  jobTitle: "React Developer"
+}
+
+**********
+const form = useForm<ApplicationFormValues>();
+This means:
+"This form follows the ApplicationFormValues type."
+
+
+**************Zod Resolver
+import { zodResolver } from "@hookform/resolvers/zod";
+
+React Hook Form doesn't know Zod by itself.
+The resolver acts like a translator.
+React Hook Form
+↓
+Resolver
+↓
+Zod Schema
+
+Without this,
+resolVer: zodResolver(...)
+
+your validation rules will never run.
+
+
+const form = useForm<ApplicationFormValues>({
+  resolver: zodResolver(ApplicationSchema),
+});
+resolver:
+zodResolver(ApplicationSchema)
+Connects React Hook Form to Zod.
+
+**************Form:
+
+1. Form
+const form = useForm();
+<Form {...form}>
+  ...
+</Form>
+
+Form is the parent container for the entire form.
+
+It provides the React Hook Form context to all child components.
+
+Without it, FormField and the other components won't know which form they belong to.
+
+{...form} - passes everything returned by useForm() into the Form component.
+
+2. FormField:
+<FormField
+  control={form.control}
+  name="company"
+  render={({ field }) => (...)}
+/>
+
+Represents one field in the form.
+It connects:
+React Hook Form
+Your input
+Validation
+Error handling
+
+Every input gets its own FormField.
+
+<FormField
+  control={form.control}
+  name="company"
+/>
+
+This tells React Hook Form:
+"This field is called company."
+
+render={({ field }) => (...)}
+
+I. render is a prop of the FormField component. It expects a function.
+II. ({ field }) - This is object destructuring.
+
+Imagine React Hook Form internally calls:
+render({
+    field: ...,
+    fieldState: ...,
+    formState: ...
+});
+you directly extract field.
+
+III.field is an object created by React Hook Form.
+
+It contains everything needed to connect an input to the form.
+It looks something like:
+field = {
+    name: "company",
+    value: "",
+    onChange: Function,
+    onBlur: Function,
+    ref: Function
+}
+<Input {...field} />
+becomes
+<Input
+    value={field.value}
+    onChange={field.onChange}
+    onBlur={field.onBlur}
+    name={field.name}
+    ref={field.ref}
+/>
+React Hook Form now controls the input.
+
+<FormField>
+      │
+      │ calls
+      ▼
+render(({ field }) => ...)
+      │
+      ▼
+field object
+{
+   value
+   onChange
+   onBlur
+   name
+   ref
+}
+      │
+      ▼
+<Input {...field} />
+      │
+      ▼
+User types
+      │
+      ▼
+React Hook Form  tracks
+• value
+• typing
+• blur
+• validation
+and updates the form state automatically
+
+3.FormItem:
+<FormItem>
+
+Groups everything related to one field.
+
+Usually contains:
+Label
+Input
+Error message
+
+4. FormLabel:
+<FormLabel>
+    Company
+</FormLabel>
+
+Displays the label for the input.
+
+5. FormControl:
+<FormControl>
+    <Input />
+</FormControl>
+
+Wraps the actual input component.
+
+6. FormMessage:
+<FormMessage />
+
+Shows the validation error automatically.
+
+Suppose Zod says:
+Company must contain at least 2 characters
+
+FormMessage displays:
+Company  : [ G ]
+Company must contain at least 2 characters
+
+No extra code needed.
+
+| Component     | Responsibility                                                                                      |
+| ------------- | --------------------------------------------------------------------------------------------------- |
+| `Form`        | Provides the React Hook Form context to all child fields.                                           |
+| `FormField`   | Connects one specific field (e.g., `company`) to React Hook Form.                                   |
+| `FormItem`    | Groups the label, input, and error message for a single field.                                      |
+| `FormLabel`   | Displays the field's label (e.g., "Company").                                                       |
+| `FormControl` | Wraps the actual input component (`Input`, `Textarea`, `Select`, etc.) and connects it to the form. |
+| `FormMessage` | Displays validation errors for that field automatically.                                            |
+
+
+**************Select:
+1. Select
+<Select>
+  ...
+</Select>
+
+This is the parent component of the dropdown.
+
+It manages:
+Selected value
+Open/close state
+Keyboard navigation
+Change events
+
+Without Select, none of the other components work.
+
+Think of it as
+Select
+│
+├── Trigger
+├── Value
+├── Content
+└── Items
+
+<Select
+  onValueChange={field.onChange}
+  defaultValue={field.value}
+>
+
+I. onValueChange={field.onChange}
+
+onValueChange is a prop provided by the shadcn Select component.
+It is called every time the user selects a new option.
+
+field.onChange comes from React Hook Form.
+It is a function that updates the form state.
+
+
+onValueChange={field.onChange}
+
+it's equivalent to:
+onValueChange={(value) => {
+  field.onChange(value);
+}}
+
+So when the user selects:
+Offer
+
+this happens:
+
+User selects "Offer"
+        │
+        ▼
+Select calls
+
+onValueChange("Offer")
+        │
+        ▼
+field.onChange("Offer")
+        │
+        ▼
+React Hook Form updates
+
+status = "Offer"
+
+II. defaultValue={field.value}
+
+It tells the Select component:
+"When the component first renders, show this value as selected."
+
+Example:
+Suppose your form's default values are:
+
+const form = useForm({
+  defaultValues: {
+    status: "Applied",
+  },
+});
+
+Then:
+field.value is: "Applied"
+
+defaultValue="Applied"
+
+The UI initially shows:
+
+┌───────────────────────┐
+│ Applied          ▼    │
+└───────────────────────┘
+
+instead of an empty placeholder.
+
+| Prop             | Comes From          | Purpose                                                            |
+| ---------------- | ------------------- | ------------------------------------------------------------------ |
+| `onValueChange`  | **shadcn `Select`** | Callback that runs whenever the user selects a new option.         |
+| `field.onChange` | **React Hook Form** | Updates the corresponding field's value in the form state.         |
+| `defaultValue`   | **shadcn `Select`** | Sets the initial selected option when the component first renders. |
+| `field.value`    | **React Hook Form** | The current value of that form field.                              |
+
+defaultValue={field.value} → Shows the form's current value when the dropdown first appears.
+
+onValueChange={field.onChange} → Keeps the form state updated whenever the user chooses a different option.
+
+2. SelectTrigger:
+<SelectTrigger>
+
+This is the visible button that users click.
+
+Example UI:
+┌──────────────────────────────┐
+│ Applied                 ▼    │
+└──────────────────────────────┘
+
+The entire box is the SelectTrigger.
+
+3. SelectValue
+<SelectValue placeholder="Select Status" />
+
+Displays:
+the selected option
+or the placeholder
+
+When nothing is selected:
+
+┌──────────────────────────────┐
+│ Select Status           ▼    │
+└──────────────────────────────┘
+
+When "Applied" is selected:
+
+┌──────────────────────────────┐
+│ Applied                 ▼    │
+└──────────────────────────────┘
+
+SelectValue is responsible for showing that text.
+
+
+4. SelectContent:
+<SelectContent>
+
+The dropdown menu that appears after clicking.
+
+Before clicking:
+Applied ▼
+
+After clicking:
+Applied ▼
+
+Applied
+Interview
+Rejected
+Offer
+Accepted
+
+Everything inside the popup is SelectContent.
+
+5. SelectItem
+<SelectItem value="Applied">
+    Applied
+</SelectItem>
+
+Represents one option inside the dropdown.
+
+| Component       | Responsibility                                                         |
+| --------------- | ---------------------------------------------------------------------- |
+| `Select`        | The root component that manages the dropdown's state and behavior.     |
+| `SelectTrigger` | The clickable button that opens and closes the dropdown.               |
+| `SelectValue`   | Displays the selected value or a placeholder when nothing is selected. |
+| `SelectContent` | The popup panel that contains all the selectable options.              |
+| `SelectItem`    | Represents a single selectable option inside the dropdown.             |
+
+
+Select
+│
+├── SelectTrigger
+│       │
+│       ▼
+│   Visible Button
+│
+├── SelectValue
+│       │
+│       ▼
+│   Displays Selected Value
+│
+└── SelectContent
+        │
+        ▼
+    Dropdown Popup
+        │
+        ├── SelectItem
+        ├── SelectItem
+        ├── SelectItem
+        └── SelectItem
+
+
+
+
+
+**************APPLICATION FORM SUBMISSION:
+
+User clicks Submit
+        │
+        ▼
+React Hook Form
+        │
+        ▼
+Zod Validation
+        │
+        ▼
+syncUser()
+        │
+        ▼
+MongoDB User
+        │
+        ▼
+createApplication()
+        │
+        ▼
+MongoDB
+        │
+        ▼
+Toast
+        │
+        ▼
+Redirect
+
+Final Architecture:
+page.tsx
+      │
+      ▼
+syncUser()
+      │
+      ▼
+getApplications()
+      │
+      ▼
+ApplicationsTable
+      │
+      ├─────────────┐
+      ▼             ▼
+SearchBar     StatusFilter
+      │             │
+      └──────┬──────┘
+             ▼
+       Filtered Data
+             ▼
+      ApplicationRow
+             ▼
+      Edit / Delete
+
+Notice how each component has one responsibility:
+
+page.tsx → Fetch data.
+ApplicationsTable → Display the table.
+SearchBar → Handle searching.
+StatusFilter → Handle filtering.
+ApplicationRow → Render a single row.
+DeleteApplication → Handle deletion.
+
+if (search) {
+      query.$or = [
+        {
+          company: {
+            $regex: search,
+            $options: "i",
+          },
+        },
+        {
+          jobTitle: {
+            $regex: search,
+            $options: "i",
+          },
+        },
+      ];
+    }
+
+Find documents where
+userId = "user123"
+AND
+(
+    company matches "Google"
+    OR
+    jobTitle matches "Google"
+)
+Notice that userId is outside the $or.
+
+1. $or is a MongoDB query operator - At least one condition inside this array must be true.
+means:
+company == Google
+OR
+jobTitle == Google
+
+2. $regex means
+Search using a Regular Expression (Pattern Matching).
+
+Instead of searching,
+Exactly Google
+
+it can search:
+goo
+goog
+ogle
+Google
+GOOGLE
+depending on options.
+
+3.$options 
+modifies how $regex behaves.
+The most common one is
+$options: "i"
+
+The "i" means
+Ignore uppercase/lowercase (case-insensitive).
+
+const applications = await Application.find(query).sort({
+      appliedDate: -1,
+    });
+
+here query = {
+    userId: "user123",
+
+    $or: [
+        {
+            company: {
+                $regex: "Google",
+                $options: "i"
+            }
+        },
+        {
+            jobTitle: {
+                $regex: "Google",
+                $options: "i"
+            }
+        }
+    ],
+    status: "Applied"
+}
+
+
+Overall Flow:
+User searches
+
+Google
+Applied
+
+        │
+        ▼
+Build query
+
+{
+   userId: "user123",
+
+   status: "Applied",
+
+   $or: [
+      company contains Google
+      OR
+      jobTitle contains Google
+   ]
+}
+
+        │
+        ▼
+Application.find(query)
+
+        │
+        ▼
+MongoDB searches Application collection
+
+        │
+        ▼
+Returns matching documents
+
+        │
+        ▼
+Sort by appliedDate (Newest First)
+
+        │
+        ▼
+Store in
+
+applications
+
+        │
+        ▼
+Return to the frontend
+
+**************lean():
+When you write
+const user = await User.findOne({
+  clerkId,
+}).lean();
+
+Mongoose skips creating the Mongoose Document.
+
+Instead it returns
+{
+   _id: "...",
+   firstName: "Kamalika",
+   email: "...",
+   imageUrl: "..."
+}
+Just a plain JavaScript object.
+
+No methods.
+No $__.
+No _doc.
+No .save().
+
+Visual Difference:
+Without .lean()
+
+MongoDB
+   │
+   ▼
+Mongoose Document
+   │
+   ├── save()
+   ├── validate()
+   ├── populate()
+   ├── $__ 
+   └── _doc
+
+With .lean():
+
+MongoDB
+   │
+   ▼
+Plain JavaScript Object
+Why is it faster?
+
+Creating a Mongoose Document takes work.
+Mongoose has to:
+build an object
+attach methods
+attach getters
+attach virtuals
+attach middleware
+prepare change tracking
+
+.lean() skips all of that.
+So
+User.find().lean()
+
+is usually 20–50% faster than
+
+User.find()
+especially when fetching many documents.
+
+
+export default function ApplicationFilters() {
+  const router = useRouter();
+  const params = useSearchParams();
+//////////
+Read the query string from the current URL.
+
+Suppose the URL is
+/applications?search=Google&status=Applied
+  Then
+
+params.get("search")
+returns
+Google
+/////
+  const search = params.get("search") ?? "";
+  const status = params.get("status") ?? "All";
+/////
+The function update(){} updates the URL.
+It never touches MongoDB.
+It never fetches data.
+It simply changes
+Current URL
+to
+New URL
+/////
+  function update(search: string, status: string) {
+    const query = new URLSearchParams();
+/////
+Think of this as
+an empty dictionary.
+Initially
+{}
+
+If search exists
+if (search) {
+    query.set("search", search);
+}
+
+Suppose
+search = Google
+
+Now
+{
+ search: Google
+}
+
+Then
+if (status && status !== "All")
+If status is
+Interview
+
+Now
+{
+ search: Google,
+ status: Interview
+}
+/////
+    if (search) {
+      query.set("search", search);
+    }
+
+    if (status && status !== "All") {
+      query.set("status", status);
+    }
+
+    router.push(`/applications?${query.toString()}`);
+  }
+/////
+query.toString()
+becomes
+search=Google&status=Interview
+/////
+  return (
+    <div className="mb-6 flex flex-col gap-8 md:flex-row">
+      <Input
+        placeholder="Search company or job title..."
+        defaultValue={search}
+        onChange={(e) => update(e.target.value, status)}
+      />
+
+      <Select
+        defaultValue={status}
+        onValueChange={(value) => update(search, value)}
+      >
+        <SelectTrigger className="w-[220px]">
+          <SelectValue />
+        </SelectTrigger>
+
+        <SelectContent>
+          <SelectItem value="All">All</SelectItem>
+          <SelectItem value="Applied">Applied</SelectItem>
+          <SelectItem value="Interview">Interview</SelectItem>
+          <SelectItem value="Offer">Offer</SelectItem>
+          <SelectItem value="Accepted">Accepted</SelectItem>
+          <SelectItem value="Rejected">Rejected</SelectItem>
+        </SelectContent>
+      </Select>
+    </div>
+  );
+}
+
+Complete lifecycle:
+User opens
+
+/applications
+        │
+        ▼
+applications/page.tsx
+(Server Component)
+        │
+        ▼
+getApplications()
+        │
+        ▼
+MongoDB
+        │
+        ▼
+applications[]
+        │
+        ▼
+──────────────────────────
+ApplicationFilters
+ApplicationsTable
+──────────────────────────
+        │
+        │ User types Google
+        ▼
+update("Google","All")
+        │
+        ▼
+router.push()
+        │
+        ▼
+URL becomes
+
+/applications?search=Google
+        │
+        ▼
+Next.js detects URL change
+        │
+        ▼
+applications/page.tsx executes again
+        │
+        ▼
+getApplications(search="Google")
+        │
+        ▼
+MongoDB filters data
+        │
+        ▼
+New applications[]
+        │
+        ▼
+ApplicationsTable re-renders
+
+
+Notice I also changed:
+
+new: true
+to
+returnDocument: "after"
+because Mongoose is warning that new is deprecated.
+
+
+------******------********
+useSearchParams() - Read the query string from the current URL.
+
+1. const params = useSearchParams();
+
+What is useSearchParams()?
+It is a Next.js Hook.
+It reads the URL query parameters.
+Example URL:
+/applications?search=amazon&status=Applied&sort=newest&page=2
+
+Everything after the ? is called Search Params (Query Parameters).
+
+search=amazon
+status=Applied
+sort=newest
+page=2
+
+What does params contain?
+
+It is NOT a normal JavaScript object.
+It is a ReadonlyURLSearchParams
+
+which behaves like the browser's URLSearchParams.
+
+Think of it like a Map.
+params
+│
+├── search = amazon
+├── status = Applied
+├── sort = newest
+└── page = 2
+Example
+URL
+/applications?search=amazon&status=Applied&page=2
+
+Then
+const params = useSearchParams();
+
+contains
+ReadonlyURLSearchParams {
+    search="amazon",
+    status="Applied",
+    page="2"
+}
+
+Notice
+Everything is stored as a string.
+Even page=2 becomes "2"
+
+Getting values
+params.get("search");
+returns
+"amazon"
+
+
+new URLSearchParams()- Think of this as an empty dictionary.Initially query = {}
+
+new URLSearchParams(params.toString())
+Because ReadonlyURLSearchParams cannot be modified.
+
+It is read-only.
+So we create a new editable copy.
+
+Example
+Before:
+
+search=amazon
+status=Applied
+page=2
+
+After:
+const query = new URLSearchParams(params.toString());
+
+query.set("page","3");
+
+Now:
+search=amazon
+status=Applied
+page=3
+
+Array.from(
+    { length: totalPages },
+    (_, i) => i + 1
+)
+- It creates an array
+- length of an array should be equal to totalPages
+- Array.from(arrayLike, mapFunction)
+JavaScript sees
+length = 5
+and creates an array with 5 empty slots.
+[
+ empty,
+ empty,
+ empty,
+ empty,
+ empty
+]
+
+arrayLike
+↓
+{ length:5 }
+
+mapFunction
+↓
+(_, i) => i + 1
+Every callback receives (value,index)
+
+_ meaning (value)
+"I received this parameter, but I'm intentionally ignoring it."
+
+So
+(_, i)
+
+means:
+value = ignored
+index = i
+
+Iteration:
+Suppose
+
+length = 5
+
+Iteration 1:
+_ = undefined
+i = 0
+
+return i+1
+=1
+
+Iteration 2:
+i=1
+return 2
+
+Iteration 3:
+i=2
+return 3
+
+Iteration 4:
+i=3
+return 4
+
+Iteration 5:
+i=4
+return 5
+
+Final array
+[1,2,3,4,5]
+
+**************useDropZone()
+
+useDropzone is a React Hook from the react-dropzone library.
+It helps you easily build a drag-and-drop file upload area without manually handling browser drag events.
+
+const {
+  getRootProps,
+  getInputProps,
+  isDragActive,
+} = useDropzone(options);
+
+useDropzone() accepts an options object and returns an object containing helper functions and state values.
+
+Arguments (Options)
+
+The hook accepts one object with various configuration options.
+
+exmaple:
+const { getRootProps, getInputProps, isDragActive } =
+    useDropzone({
+      onDrop,
+      multiple: false,
+      accept: {
+        "application/pdf": [".pdf"],
+      },
+    });
+
+1. onDrop
+Called when files are successfully dropped or selected.
+
+useDropzone({
+  onDrop: (acceptedFiles) => {
+    console.log(acceptedFiles);
+  },
+});
+
+2. accept
+Restricts file types.
+
+useDropzone({
+  accept: {
+    "application/pdf": [".pdf"],
+  },
+});
+
+Multiple types:
+accept: {
+  "image/*": [],
+  "application/pdf": [".pdf"],
+}
+
+3. multiple
+Allow multiple files.
+
+multiple: true
+or
+multiple: false
+
+4. maxFiles
+Maximum number of files.
+
+maxFiles: 5
+
+6. minSize
+Minimum file size.
+
+minSize: 1024
+1 KB
+
+7. disabled
+Disable the dropzone.
+
+disabled: true
+
+8. noClick
+Disable file picker when clicking.
+
+noClick: true
+
+9. noKeyboard
+Disable keyboard interactions.
+
+noKeyboard: true
+
+10. onDropAccepted
+Runs only when accepted files are dropped.
+
+onDropAccepted(files) {
+    console.log(files);
+}
+
+11. onDropRejected
+Runs when rejected files are dropped.
+
+onDropRejected(fileRejections) {
+    console.log(fileRejections);
+}
+
+What does useDropzone() return?
+
+1. getRootProps()
+Returns all the props needed for the outer drop area.
+
+Example:
+<div {...getRootProps()}>
+
+It adds:
+Drag events
+Drop events
+Click events
+Accessibility attributes
+
+Without it:
+<div>
+
+With it:
+<div {...getRootProps()}>
+
+2. getInputProps()
+Returns props for the hidden file input.
+
+Example:
+<input {...getInputProps()} />
+
+Internally it adds:
+<input
+    type="file"
+    onChange={...}
+    multiple
+    accept="application/pdf"
+/>
+
+3. acceptedFiles
+Array of accepted files.
+
+Example:
+
+[
+    resume.pdf,
+    profile.jpg
+]
+
+4. fileRejections
+Rejected files with reasons.
+Example:
+
+[
+    {
+        file,
+        errors
+    }
+]
+
+Reasons:
+File too large
+Wrong type
+Too many files
+
+5. isDragActive
+Boolean.
+
+true
+User is dragging files over the dropzone.
+
+Useful for UI:
+{
+    isDragActive
+        ? "Drop here"
+        : "Drag files"
+}
+
+6. isDragAccept
+Boolean.
+
+True when the dragged files satisfy your acceptance rules.
+
+Example:
+Dragging a PDF when PDFs are allowed:
+true
+
+7. isDragReject
+Boolean.
+
+True when the dragged files are invalid.
+
+Example:
+Dragging an .exe while only PDFs are allowed
+
+8. open()
+Programmatically opens the file picker.
+
+Example:
+
+<button onClick={open}>
+    Browse
+</button>
+
+| Option / Return   | Type   | Purpose                                          |
+| ----------------- | ------ | ------------------------------------------------ |
+| `onDrop`          | Option | Called when files are dropped/selected           |
+| `accept`          | Option | Restrict file types                              |
+| `multiple`        | Option | Allow multiple files                             |
+| `maxFiles`        | Option | Limit number of files                            |
+| `maxSize`         | Option | Maximum file size                                |
+| `minSize`         | Option | Minimum file size                                |
+| `disabled`        | Option | Disable the dropzone                             |
+| `getRootProps()`  | Return | Props for the drop area                          |
+| `getInputProps()` | Return | Props for the hidden file input                  |
+| `acceptedFiles`   | Return | Array of accepted `File` objects                 |
+| `fileRejections`  | Return | Rejected files and reasons                       |
+| `isDragActive`    | Return | `true` while dragging over the dropzone          |
+| `isDragAccept`    | Return | `true` if dragged files meet acceptance rules    |
+| `isDragReject`    | Return | `true` if dragged files violate acceptance rules |
+| `open()`          | Return | Opens the file picker programmatically           |
+
+
+Every uploaded file has a MIME type.
+
+Examples
+
+PDF
+application/pdf
+
+PNG
+image/png
+
+JPEG
+image/jpeg
+
+DOCX
+application/vnd...
+
+What is Cloudinary?
+Cloudinary is a cloud storage service for files.
+
+Think of it like:
+📷 Google Photos (stores photos)
+📁 Google Drive (stores files)
+☁️ Cloudinary (stores images, PDFs, videos, documents, etc.)
+Instead of saving files on your own server, you upload them to Cloudinary.
+
+Without Cloudinary
+
+Suppose a user uploads:
+Resume.pdf
+
+If you store it locally:
+hire_ledger/
+│
+├── uploads/
+│     ├── Resume.pdf
+│     ├── Resume2.pdf
+│     └── Resume3.pdf
+
+Problems:
+If the server crashes → files may be lost.
+If you deploy to Vercel → local files disappear on every deployment.
+Hard to scale.
+
+With Cloudinary
+Instead:
+
+User
+   │
+   ▼
+Resume.pdf
+   │
+   ▼
+Cloudinary
+
+Cloudinary stores the file on its servers.
+
+Your database only stores information like:
+{
+  "fileName": "Resume.pdf",
+  "url": "https://res.cloudinary.com/gbndrylk/raw/upload/v175...",
+  "publicId": "hire-ledger/resumes/abc123"
+}
+
+
+import { Readable } from "stream";
+This comes from Node.js.
+Cloudinary uploads streams, not raw Buffers.
+
+Buffer
+↓
+Readable Stream
+↓
+Cloudinary
+
+1. Convert File → ArrayBuffer
+const bytes = await file.arrayBuffer();
+Browser File objects don't directly become Node Buffers.
+
+2. Convert ArrayBuffer → Buffer
+const buffer = Buffer.from(bytes);
+
+Node libraries like Cloudinary work with Buffers.
+
+3.Upload to Cloudinary
+
+const uploadStream =
+cloudinary.uploader.upload_stream(
+
+Creates a writable stream.
+Nothing uploads yet.
+It's waiting for data.
+
+Upload Options
+{
+   folder:"hire-ledger/resumes",
+   resource_type:"raw"
+}
+
+Folder
+
+Cloudinary
+↓
+hire-ledger
+↓
+resumes
+
+resource_type
+resource_type:"raw"
+
+Because PDFs are raw files.
+
+Images
+↓
+image
+
+Videos
+↓
+video
+
+PDF
+↓
+raw
+
+Callback
+(error,result)=>{
+
+Runs after upload finishes.
+
+If upload failed
+reject(error)
+
+Otherwise
+resolve(result)
+
+Pipe Buffer
+Readable.from(buffer)
+Turns Buffer into Readable Stream
+
+.pipe(uploadStream);
+Streams data into Cloudinary.
+
+PDF
+↓
+ArrayBuffer
+↓
+Buffer
+↓
+Readable Stream
+↓
+Cloudinary
+
+Upload Result
+
+Cloudinary returns something like
+
+{
+   public_id:"hire-ledger/resumes/abc",
+   secure_url:"https://..."
+}
+
+Stored in uploadResult
+
+User selects Resume.pdf
+          │
+          ▼
+FormData
+          │
+          ▼
+uploadResume()
+          │
+          ▼
+connectDB()
+          │
+          ▼
+syncUser()
+          │
+          ▼
+Get File
+          │
+          ▼
+File
+          │
+          ▼
+ArrayBuffer
+          │
+          ▼
+Buffer
+          │
+          ▼
+Readable Stream
+          │
+          ▼
+Cloudinary Upload
+          │
+          ▼
+Receive URL + publicId
+          │
+          ▼
+Save Resume Document
+          │
+          ▼
+revalidatePath("/resume")
+          │
+          ▼
+Return Success
+          │
+          ▼
+Client shows
+"Resume uploaded successfully"
+
+
+One-line definitions (Good for interviews)
+
+1. File
+A browser object representing an uploaded file, including metadata and binary content.
+It contains:
+filename
+size
+MIME type
+file contents
+
+2. ArrayBuffer
+An ArrayBuffer is the browser's representation of the file's binary contents. It stores raw bytes only.
+
+Created using:
+const bytes = await file.arrayBuffer();
+Example output:
+ArrayBuffer {
+  byteLength: 201346
+}
+
+3. Buffer
+Node.js's binary data type used to efficiently manipulate and transfer binary data.
+
+Created using:
+const buffer = Buffer.from(bytes);
+
+Buffer provides many helper methods:
+buffer.length
+buffer.toString()
+buffer.slice()
+
+4. Readable Stream
+A mechanism for reading or sending data in small chunks instead of loading the entire file into memory at once.
+
+Created using:
+Readable.from(buffer)
+
+5. upload_stream()
+A Cloudinary API that accepts streamed binary data for uploading files.
+
+Cloudinary creates an upload destination.
+const uploadStream =
+cloudinary.uploader.upload_stream(...)
+
+6. .pipe()
+A Node.js method that connects a readable stream to a writable stream, allowing data to flow automatically from source to destination.
+Readable.from(buffer).pipe(uploadStream);
+
+7.Cloudinary returns something like:
+
+{
+  "public_id": "hire-ledger/resumes/jd82hd",
+  "secure_url": "https://res.cloudinary.com/gbndrylk/raw/upload/v1758.../Resume.pdf"
+}
+
+--public_id : This is Cloudinary's unique ID.
+
+Example:
+hire-ledger/resumes/jd82hd
+
+You use it later to delete the file.
+
+await cloudinary.uploader.destroy(publicId, {
+  resource_type: "raw",
+});
+
+--secure_url: This is the public HTTPS URL.
+
+Example:
+https://res.cloudinary.com/gbndrylk/raw/upload/v1758.../Resume.pdf
+
+Anyone with this URL can view or download the file (unless you've configured access restrictions).
+
+8.cloudinary.uploader.upload_stream
+
+I. cloudinary - This is the Cloudinary SDK object.
+It contains lots of services.
+Example:
+cloudinary
+│
+├── uploader
+├── api
+├── search
+├── config
+└── utils
+
+II.uploader
+
+cloudinary.uploader
+This is the upload service.
+
+Imagine Cloudinary has different departments.
+Cloudinary
+
+├── Upload Department
+├── Search Department
+├── API Department
+└── Admin Department
+
+uploader is the department responsible for uploading files.
+
+It provides methods like:
+cloudinary.uploader.upload()
+cloudinary.uploader.upload_stream()
+cloudinary.uploader.destroy()
+cloudinary.uploader.rename()
+
+III. upload_stream
+
+This is a method inside the uploader
+
+cloudinary.uploader.upload_stream()
+Meaning:
+"Start accepting streamed data and upload it."
+Instead of giving Cloudinary an entire file,
+you give it a stream of bytes.
+
+                User
+                  │
+                  ▼
+           Resume.pdf
+                  │
+                  ▼
+        Next.js Server Action
+                  │
+                  ▼
+          Upload to Cloudinary
+                  │
+                  ▼
+      Cloudinary stores PDF
+                  │
+        ┌─────────┴─────────┐
+        ▼                   ▼
+ public_id             secure_url
+        │                   │
+        └─────────┬─────────┘
+                  ▼
+             MongoDB Resume
+                  │
+                  ▼
+         Resume History Page
+
+-------------*************-------------*************-------PROGRESS BAR ------*************-------------*************
+
+
+Step1
+↓
+nextStep()
+↓
+Zustand
+currentStep = 2
+↓
+ProgressBar
+↓
+Reads currentStep
+↓
+Circle 2 becomes green
+↓
+Width becomes 50%
+
+
+
+REACT FLOW:
+Button Click
+↓
+nextStep()
+↓
+Zustand set()
+↓
+currentStep changes
+↓
+ProgressBar re-renders
+↓
+Reads new currentStep
+↓
+UI updates automatically
+
+
+ProgressBar never updates the step.
+It is only a viewer.
+
+The components that change the step are:
+
+✅ Step1Application.tsx → nextStep()
+✅ Step2Resume.tsx → nextStep()
+✅ Step3JobDescription.tsx → nextStep()
+✅ All Back buttons → previousStep()
+
+This separation of responsibilities is intentional: the step components control navigation, while ProgressBar simply reflects the current state.
