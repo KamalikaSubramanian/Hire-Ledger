@@ -147,13 +147,16 @@ ${formattedAnswers}
       message: "Improved resume generated successfully.",
     };
   } catch (err) {
-    console.error("Gemini Analysis Error:", err);
+  console.error("generateImprovedResume ERROR:", err);
 
-    return {
-      success: false,
-      message: "Gemini analysis failed.",
-    };
-  }
+  return {
+    success: false,
+    message:
+      err instanceof Error
+        ? err.message
+        : "Failed to generate improved resume.",
+  };
+}
 }
 
 export async function getImprovedResume(id: string) {
