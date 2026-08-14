@@ -57,33 +57,3 @@ export async function syncUser() {
     };
   }
 }
-//data: CreateUserParams - Data expected from clerk
-
-// "use server";
-
-// import User from "@/models/user";
-// import { connectDB } from "@/lib/mongodb";
-
-// export async function createUser(data: any) {
-//   await connectDB();
-
-//   return User.create(data);
-// }
-
-// export async function updateUser(data: any) {
-//   await connectDB();
-
-//   return User.findOneAndUpdate(
-//     { clerkId: data.clerkId },
-//     data,
-//     { new: true }
-//   );
-// }
-
-// export async function deleteUser(clerkId: string) {
-//   await connectDB();
-
-//   return User.findOneAndDelete({
-//     clerkId,
-//   });
-// }

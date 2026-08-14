@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { getSkillsDashboard } from "@/actions/skills.actions";
 
 import SkillsClient from "@/components/skills/SkillsClient";

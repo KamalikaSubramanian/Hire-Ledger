@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { getImprovedResume } from "@/actions/improvedResume.actions";
 
 import ResumePreview from "@/components/resume-preview/ResumePreview";

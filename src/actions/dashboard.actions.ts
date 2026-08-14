@@ -15,7 +15,7 @@ export async function getDashboardStats() {
 
     console.log(user);
 
-    if (!user) {
+    if (!user.success || !user.data) {
       return {
         success: false,
         message: "Unauthorized",
@@ -102,7 +102,6 @@ export async function getDashboardStats() {
       month: months[item._id.month],
       total: item.total,
     }));
-
 
     // PIE CHART
 
@@ -246,9 +245,7 @@ export async function getDashboardStats() {
       )
       .lean();
 
-
     // AI RECOMMENDATIONS
-
 
     const recommendations: string[] = [];
 

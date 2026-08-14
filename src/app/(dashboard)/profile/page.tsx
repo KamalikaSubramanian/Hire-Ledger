@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { getProfileStats } from "@/actions/profile.actions";
 
 import {
