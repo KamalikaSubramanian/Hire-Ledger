@@ -65,12 +65,19 @@ export default function AnalysisFilters({
       </Select>
 
       {/* Date */}
-      <Input
-        type="date"
-        className="analysis-filter-input"
-        value={date}
-        onChange={(e) => onDateChange(e.target.value)}
-      />
+      {/* Date */}
+      <div className="analysis-date-wrapper">
+        {!date && <span className="analysis-date-placeholder">dd/mm/yyyy</span>}
+
+        <Input
+          type="date"
+          className={`analysis-filter-input analysis-date-input ${
+            !date ? "analysis-date-empty" : ""
+          }`}
+          value={date}
+          onChange={(e) => onDateChange(e.target.value)}
+        />
+      </div>
 
       {/* Sort */}
       <Select
