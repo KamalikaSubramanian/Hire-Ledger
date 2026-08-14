@@ -394,6 +394,152 @@
 }
 
 /* =========================================================
+   RESUME SELECTION CARD
+========================================================= */
+
+.resume-selection-card {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.resume-selection-card-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+
+  padding: 20px;
+}
+
+.resume-selection-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+
+  min-width: 0;
+  flex: 1;
+}
+
+.resume-selection-icon {
+  width: 22px;
+  height: 22px;
+
+  flex-shrink: 0;
+
+  margin-top: 2px;
+}
+
+.resume-selection-details {
+  min-width: 0;
+  flex: 1;
+}
+
+.resume-selection-name {
+  margin: 0;
+
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resume-selection-date {
+  margin: 4px 0 0;
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.resume-selection-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  flex-shrink: 0;
+}
+/* =========================================================
+   MOBILE - RESUME SELECTION CARD
+========================================================= */
+
+@media (max-width: 640px) {
+  .analysis-resume-list {
+    width: 100%;
+    gap: 14px;
+  }
+
+  .resume-selection-card {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .resume-selection-card-content {
+    width: 100%;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 16px;
+
+    padding: 18px;
+  }
+
+  .resume-selection-info {
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 12px;
+  }
+
+  .resume-selection-details {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .resume-selection-name {
+    width: 100%;
+    min-width: 0;
+
+    font-size: 15px;
+    line-height: 1.45;
+
+    /*
+      Allow long filenames to occupy multiple lines
+      instead of pushing the buttons outside the card.
+    */
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .resume-selection-date {
+    margin-top: 5px;
+
+    font-size: 13px;
+  }
+
+  .resume-selection-actions {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 10px;
+  }
+
+  .resume-selection-actions button {
+    flex-shrink: 0;
+  }
+}
+/* =========================================================
    EMPTY STATE
 ========================================================= */
 

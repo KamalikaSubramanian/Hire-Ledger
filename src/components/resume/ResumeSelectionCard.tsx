@@ -27,54 +27,57 @@ export default function ResumeSelectionCard({
 
   return (
     <Card
-      className={`cursor-pointer transition ${
-        selected ? "border-primary border-2" : ""
-      }`}
-      onClick={onSelect}
-    >
-      <CardContent className="flex items-center justify-between p-5">
-        <div className="flex gap-8">
-          <FileText className="text-primary mt-1" />
+  className={`resume-selection-card cursor-pointer transition ${
+    selected ? "border-primary border-2" : ""
+  }`}
+  onClick={onSelect}
+>
+  <CardContent className="resume-selection-card-content">
+    <div className="resume-selection-info">
+      <FileText className="resume-selection-icon text-primary" />
 
-          <div>
-            <h3 className="font-semibold">{resume.fileName}</h3>
+      <div className="resume-selection-details">
+        <h3 className="resume-selection-name">
+          {resume.fileName}
+        </h3>
 
-            <p className="text-muted-foreground text-sm">
-              Uploaded {new Date(resume.createdAt).toLocaleDateString()}
-            </p>
-          </div>
-        </div>
+        <p className="resume-selection-date text-muted-foreground">
+          Uploaded{" "}
+          {new Date(resume.createdAt).toLocaleDateString("en-GB")}
+        </p>
+      </div>
+    </div>
 
-        <div className="flex items-center gap-3">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={(e) => {
-              e.stopPropagation();
+    <div className="resume-selection-actions">
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={(e) => {
+          e.stopPropagation();
 
-              router.push(`/resume-library/view/${resume._id}`);
-            }}
-          >
-            <Eye className="mr-2 h-4 w-4" />
-            View
-          </Button>
+          router.push(`/resume-library/view/${resume._id}`);
+        }}
+      >
+        <Eye className="mr-2 h-4 w-4" />
+        View
+      </Button>
 
-          {selected ? (
-            <CheckCircle2 className="text-green-600" />
-          ) : (
-            <Button
-              size="sm"
-              onClick={(e) => {
-                e.stopPropagation();
+      {selected ? (
+        <CheckCircle2 className="text-green-600" />
+      ) : (
+        <Button
+          size="sm"
+          onClick={(e) => {
+            e.stopPropagation();
 
-                onSelect();
-              }}
-            >
-              Select
-            </Button>
-          )}
-        </div>
-      </CardContent>
-    </Card>
+            onSelect();
+          }}
+        >
+          Select
+        </Button>
+      )}
+    </div>
+  </CardContent>
+</Card>
   );
 }
