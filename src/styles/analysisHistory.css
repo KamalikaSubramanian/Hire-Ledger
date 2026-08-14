@@ -313,21 +313,82 @@
     box-sizing: border-box;
   }
 
-  /* Specifically for the date input */
+  /* Mobile date input */
   .analysis-filter-input[type="date"] {
     width: 100%;
     min-width: 0;
-    display: block;
+    height: 52px;
 
-    padding-left: 14px;
-    padding-right: 12px;
+    display: block;
+    box-sizing: border-box;
+
+    padding: 0 12px;
 
     font-size: 14px;
+    line-height: 1.2;
+
+    color: #1f2937;
+    -webkit-text-fill-color: #1f2937;
+
+    background: #ffffff;
+    opacity: 1;
+    appearance: auto;
+    -webkit-appearance: auto;
+  }
+
+  /* Make the native date fields visible */
+  .analysis-filter-input[type="date"]::-webkit-datetime-edit {
+    color: #1f2937;
+    -webkit-text-fill-color: #1f2937;
+  }
+
+  .analysis-filter-input[type="date"]::-webkit-datetime-edit-text,
+  .analysis-filter-input[type="date"]::-webkit-datetime-edit-month-field,
+  .analysis-filter-input[type="date"]::-webkit-datetime-edit-day-field,
+  .analysis-filter-input[type="date"]::-webkit-datetime-edit-year-field {
+    color: #1f2937;
+    -webkit-text-fill-color: #1f2937;
+  }
+
+  /* Native date value alignment */
+  .analysis-filter-input[type="date"]::-webkit-date-and-time-value {
+    text-align: left;
+  }
+
+  /* Calendar icon */
+  .analysis-filter-input[type="date"]::-webkit-calendar-picker-indicator {
+    margin-left: 4px;
+    cursor: pointer;
   }
 
   .analysis-select-content {
     max-width: calc(100vw - 32px);
   }
+}
+
+.analysis-filter-input[type="date"] {
+  color: #1f2937;
+  -webkit-text-fill-color: #1f2937;
+  opacity: 1;
+}
+
+.analysis-filter-input[type="date"]::-webkit-datetime-edit {
+  color: #1f2937;
+  -webkit-text-fill-color: #1f2937;
+}
+
+.analysis-filter-input[type="date"]::-webkit-datetime-edit-text,
+.analysis-filter-input[type="date"]::-webkit-datetime-edit-month-field,
+.analysis-filter-input[type="date"]::-webkit-datetime-edit-day-field,
+.analysis-filter-input[type="date"]::-webkit-datetime-edit-year-field {
+  color: #1f2937;
+  -webkit-text-fill-color: #1f2937;
+}
+
+.analysis-filter-input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0);
+  opacity: 1;
+  cursor: pointer;
 }
 
 /* =========================================================
@@ -479,7 +540,7 @@
 }
 
 .analysis-description-dialog {
-   width: min(900px, 92vw);
+  width: min(900px, 92vw);
   max-width: 900px;
   background: white;
 }
@@ -691,7 +752,6 @@
    ========================================================= */
 
 @media (max-width: 640px) {
-
   /* Analysis table container */
   .analysis-table-card {
     width: 100%;
