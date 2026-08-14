@@ -40,5 +40,5 @@ export const sidebarItems = [
     title: "Profile",
     href: "/profile",
     icon: User,
-  }
+  },
 ];

@@ -2,13 +2,34 @@
 
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { useState } from "react";
 interface Props {
   analyses: any[];
 }
 
 export default function AnalysisTable({ analyses }: Props) {
   const router = useRouter();
+
+  const [selectedJobDescription, setSelectedJobDescription] = useState<
+    string | null
+  >(null);
+
+  function getShortDescription(description: string) {
+    const words = description.trim().split(/\s+/);
+
+    if (words.length <= 3) {
+      return description;
+    }
+
+    return words.slice(0, 3).join(" ") + "...";
+  }
 
   if (analyses.length === 0) {
     return (
@@ -35,71 +56,172 @@ export default function AnalysisTable({ analyses }: Props) {
   }
 
   return (
-    <div className="analysis-table-card">
-      <div className="analysis-table-wrapper">
-        <table className="analysis-table">
-          <thead>
-            <tr>
-              <th>Job Title</th>
-              <th>Company</th>
-              <th>ATS Score</th>
-              <th>Date</th>
-              <th>Action</th>
-            </tr>
-          </thead>
+    <>
+      <div className="analysis-table-card">
+        <div className="analysis-table-wrapper">
+          <table className="analysis-table">
+            <thead>
+              <tr>
+                <th>Job Title</th>
+                <th>Company</th>
+                <th>Resume</th>
+                <th>Job Description</th>
+                <th>ATS Score</th>
+                <th>Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
 
-          <tbody>
-            {analyses.map((analysis) => {
-              const score = analysis.analysisResult?.atsAnalysis?.atsScore ?? 0;
+            <tbody>
+              {analyses.map((analysis) => {
+                const score =
+                  analysis.analysisResult?.atsAnalysis?.atsScore ?? 0;
 
-              return (
-                <tr key={analysis._id}>
-                  <td>
-                    <span className="analysis-job-title">
-                      {analysis.jobTitle}
-                    </span>
-                  </td>
+                const jobDescription =
+                  analysis.jobDescription || "No job description available.";
 
-                  <td>
-                    <span className="analysis-company">
-                      {analysis.company || "—"}
-                    </span>
-                  </td>
+                // Show only first 3 words
+                const descriptionPreview = jobDescription
+                  .split(/\s+/)
+                  .slice(0, 3)
+                  .join(" ");
 
-                  <td>
-                    <span
-                      className={`analysis-score-badge ${getScoreClass(score)}`}
-                    >
-                      {score}%
-                    </span>
-                  </td>
+                return (
+                  <tr key={analysis._id}>
+                    {/* JOB TITLE */}
+                    <td>
+                      <span className="analysis-job-title">
+                        {analysis.jobTitle}
+                      </span>
+                    </td>
 
-                  <td>
-                    <span className="analysis-date">
-                      {new Date(analysis.createdAt).toLocaleDateString("en-GB")}
-                    </span>
-                  </td>
+                    {/* COMPANY */}
+                    <td>
+                      <span className="analysis-company">
+                        {analysis.company || "—"}
+                      </span>
+                    </td>
 
-                  <td>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="analysis-view-button"
-                      onClick={(e) => {
-                        e.stopPropagation();
+                    <td>
+                      {analysis.resumeId ? (
+                        <button
+                          type="button"
+                          className="analysis-resume-link"
+                          onClick={(e) => {
+                            e.stopPropagation();
 
-                        router.push(`/analysis/${analysis._id}`);
-                      }}
-                    >
-                      View
-                    </Button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                            router.push(
+                              `/resume-library/view/${analysis.resumeId}`,
+                            );
+                          }}
+                        >
+                          {analysis.resumeName || "View Resume"}
+                        </button>
+                      ) : (
+                        <span className="analysis-resume-missing">
+                          No resume
+                        </span>
+                      )}
+                    </td>
+
+                    {/* JOB DESCRIPTION */}
+                    <td>
+                      <div className="analysis-description-preview">
+                        <span>
+                          {descriptionPreview}
+                          {jobDescription.split(/\s+/).length > 3 && "..."}
+                        </span>
+
+                        <button
+                          type="button"
+                          className="analysis-description-more"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedJobDescription(analysis.jobDescription);
+                          }}
+                          aria-label="View full job description"
+                        >
+                          ...
+                        </button>
+                        <Dialog
+                          open={selectedJobDescription !== null}
+                          onOpenChange={(open) => {
+                            if (!open) {
+                              setSelectedJobDescription(null);
+                            }
+                          }}
+                        >
+                          <DialogContent className="analysis-description-dialog">
+                            <DialogHeader>
+                              <DialogTitle>Job Description</DialogTitle>
+                            </DialogHeader>
+
+                            <div className="analysis-description-scroll">
+                              {jobDescription}
+                            </div>
+                          </DialogContent>
+                        </Dialog>
+                      </div>
+                    </td>
+
+                    {/* ATS SCORE */}
+                    <td>
+                      <span
+                        className={`analysis-score-badge ${getScoreClass(score)}`}
+                      >
+                        {score}%
+                      </span>
+                    </td>
+
+                    {/* DATE */}
+                    <td>
+                      <span className="analysis-date">
+                        {new Date(analysis.createdAt).toLocaleDateString(
+                          "en-GB",
+                        )}
+                      </span>
+                    </td>
+
+                    {/* ACTION */}
+                    <td>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="analysis-view-button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+
+                          router.push(`/analysis/${analysis._id}`);
+                        }}
+                      >
+                        View
+                      </Button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+      <Dialog
+        open={selectedJobDescription !== null}
+        onOpenChange={(open) => {
+          if (!open) {
+            setSelectedJobDescription(null);
+          }
+        }}
+      >
+        <DialogContent className="analysis-description-dialog">
+          <DialogHeader>
+            <DialogTitle>Job Description</DialogTitle>
+          </DialogHeader>
+
+          <div className="analysis-description-content">
+            {selectedJobDescription}
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
