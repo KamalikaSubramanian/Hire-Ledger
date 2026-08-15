@@ -10,11 +10,25 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useState } from "react";
-interface Props {
-  analyses: any[];
+
+interface PaginationData {
+  page: number;
+  limit: number;
+  totalPages: number;
+  totalItems: number;
 }
 
-export default function AnalysisTable({ analyses }: Props) {
+interface Props {
+  analyses: any[];
+  pagination: PaginationData;
+  onPageChange: (page: number) => void;
+}
+
+export default function AnalysisTable({
+  analyses,
+  pagination,
+  onPageChange,
+}: Props) {
   const router = useRouter();
 
   const [selectedJobDescription, setSelectedJobDescription] = useState<
@@ -142,7 +156,7 @@ export default function AnalysisTable({ analyses }: Props) {
                           aria-label="View full job description"
                         >
                           ...
-                        </button>                  
+                        </button>
                       </div>
                     </td>
 
@@ -185,6 +199,63 @@ export default function AnalysisTable({ analyses }: Props) {
             </tbody>
           </table>
         </div>
+
+        {/* PAGINATION */}
+
+        {pagination.totalItems > 0 && (
+          <div className="analysis-pagination">
+            <div className="analysis-pagination-info">
+              Showing {(pagination.page - 1) * pagination.limit + 1}
+              {" - "}
+              {Math.min(
+                pagination.page * pagination.limit,
+                pagination.totalItems,
+              )}
+              {" of "}
+              {pagination.totalItems}
+            </div>
+
+            <div className="analysis-pagination-controls">
+              <button
+                type="button"
+                className="analysis-pagination-button"
+                disabled={pagination.page === 1}
+                onClick={() => onPageChange(pagination.page - 1)}
+              >
+                Previous
+              </button>
+
+              <div className="analysis-pagination-pages">
+                {Array.from(
+                  { length: pagination.totalPages },
+                  (_, index) => index + 1,
+                ).map((pageNumber) => (
+                  <button
+                    key={pageNumber}
+                    type="button"
+                    className={`analysis-pagination-page ${
+                      pagination.page === pageNumber
+                        ? "analysis-pagination-page-active"
+                        : ""
+                    }`}
+                    onClick={() => onPageChange(pageNumber)}
+                  >
+                    {pageNumber}
+                  </button>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                className="analysis-pagination-button"
+                disabled={pagination.page === pagination.totalPages}
+                onClick={() => onPageChange(pagination.page + 1)}
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        )}
       </div>
       <Dialog
         open={selectedJobDescription !== null}
